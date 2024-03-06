@@ -8,7 +8,7 @@ import styles from "./AvatarSelect.module.css";
 export const AvatarSelectDialog = () => {
   const avatarSelectStore = useAvatarSelectStore();
   const [isModalOpen, setIsModalOpen] = useState<boolean>(
-    !avatarSelectStore.playerName || !avatarSelectStore.setAvatarType,
+    !avatarSelectStore.playerName || !avatarSelectStore.avatarType,
   );
 
   const handleOk = () => {
