@@ -1,0 +1,11 @@
+.modalAvatarSelect {
+  width: 100%;
+}
+
+.menuIcon {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  justify-content: flex-end;
+  font-size: x-large;
+}
