@@ -43,7 +43,7 @@ export const AvatarSelect = (props: AvatarSelectProps) => {
             placeholder="Select avatar"
             value={avatarType || undefined}
             onChange={(value) => setAvatarType(value)}
-            className={styles.modalAvatarSelect}
+            className={styles.avatarSelect}
             options={Object.keys(defaultAvatarMap).map((key) => ({
               label: key,
               value: key,
