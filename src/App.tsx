@@ -1,23 +1,33 @@
 import { Avatar } from "@/components/basics/Avatar/Avatar";
-import { defaultAnimationMap } from "@/components/basics/Avatar/Avatar.function";
+import {
+  defaultAnimationMap,
+  defaultAvatarMap,
+} from "@/components/basics/Avatar/Avatar.function";
+import useAvatarSelectStore from "@/components/basics/AvatarSelect/useAvatarSelectStore";
+import AvatarSelectDialog from "@/components/pages/AvatarSelect/AvatarSelectDialog";
 import usePlayerInput from "@/hooks/usePlayerInput";
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import styles from "./App.module.css";
 
 function App() {
+  const avatarSelectStore = useAvatarSelectStore();
   const playerInput = usePlayerInput();
 
   return (
     <>
-      <div style={{ width: "100vw", height: "100vh" }}>
+      <AvatarSelectDialog />
+      <div className={styles.mainDiv}>
         <Canvas linear={true} flat={true}>
           <OrbitControls />
           <ambientLight intensity={7} />
-          <Avatar
-            avatarPath={"public/avatars/timmy.vrm"}
-            controller={playerInput.movement}
-            animationMap={defaultAnimationMap}
-          ></Avatar>
+          {avatarSelectStore.avatarType && (
+            <Avatar
+              avatarPath={defaultAvatarMap[avatarSelectStore.avatarType]}
+              controller={playerInput.movement}
+              animationMap={defaultAnimationMap}
+            ></Avatar>
+          )}
         </Canvas>
       </div>
     </>

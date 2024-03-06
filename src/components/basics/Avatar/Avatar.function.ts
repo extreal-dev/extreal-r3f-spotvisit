@@ -10,3 +10,9 @@ export const defaultAvatarMap: { [name: string]: string } = {
   Michelle: "./avatars/michelle.vrm",
   Timmy: "./avatars/timmy.vrm",
 };
+
+export const defaultAvatarFaceImageMap: { [name: string]: string } = {
+  Amy: "./avatar-faces/face-amy.png",
+  Michelle: "./avatar-faces/face-michelle.png",
+  Timmy: "./avatar-faces/face-timmy.png",
+};
