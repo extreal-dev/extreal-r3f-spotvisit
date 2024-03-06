@@ -1,0 +1,69 @@
+openapi: 3.1.0
+info:
+  title: openapi
+  version: "1.0"
+servers:
+  - url: "http://localhost:3000"
+paths:
+  /spots:
+    get:
+      tags:
+        - spots
+      summary: "Get Spot information List"
+      operationId: get-spots
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/SpotResponse"
+              examples:
+                example-1:
+                  value:
+                    - id: toba
+                      name: 鳥羽
+                      description: 鳥羽（とば）とは、かつて京都洛外、山城国紀伊郡に属していた鳥羽郷（とばごう）・鳥羽荘（とばのしょう）などと呼ばれた地域を指す名称。現在では京都市でも南区に属する上鳥羽・伏見区に属する下鳥羽に分割されている
+                      thumbnailImageUrl: string
+                      sphericalImageUrl: string
+                      sphericalVideoUrl: string
+                    - id: fushimi
+                      name: 伏見
+                      description: 伏見区（ふしみく）は、京都市を構成する11の行政区の1つで、京都市の南部に位置する
+                      thumbnailImageUrl: string
+                      sphericalImageUrl: string
+                      sphericalVideoUrl: string
+                    - id: mibu
+                      name: 壬生
+                      description: 壬生（みぶ）は京都市中京区の地名。地名はかつて、湿地帯であったことに由来する。平安京造営の際に開発されたが衰退し、元の湿地帯に戻った。朱雀院跡がNISSHA本社の敷地から発掘されている
+                      thumbnailImageUrl: string
+                      sphericalImageUrl: string
+                      sphericalVideoUrl: string
+components:
+  schemas:
+    SpotResponse:
+      title: SpotResponse
+      type: object
+      description: ""
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        thumbnailImageUrl:
+          type: string
+        sphericalImageUrl:
+          type: string
+        sphericalVideoUrl:
+          type: string
+      required:
+        - id
+        - name
+        - description
+        - thumbnailImageUrl
+        - sphericalImageUrl
+        - sphericalVideoUrl
