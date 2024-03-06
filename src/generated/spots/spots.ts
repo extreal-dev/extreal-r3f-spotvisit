@@ -16,7 +16,7 @@ import { backendCustomInstance } from "../../libs/backend/customInstance";
 import type { ErrorType } from "../../libs/backend/customInstance";
 
 /**
- * @summary スポット一覧の取得
+ * @summary Get Spot information List
  */
 export const getSpots = (signal?: AbortSignal) => {
   return backendCustomInstance<SpotResponse[]>({
@@ -59,7 +59,7 @@ export type GetSpotsQueryResult = NonNullable<
 export type GetSpotsQueryError = ErrorType<unknown>;
 
 /**
- * @summary スポット一覧の取得
+ * @summary Get Spot information List
  */
 export const useGetSpots = <
   TData = Awaited<ReturnType<typeof getSpots>>,

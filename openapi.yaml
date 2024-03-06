@@ -9,7 +9,7 @@ paths:
     get:
       tags:
         - spots
-      summary: "スポット一覧の取得"
+      summary: "Get Spot information List"
       operationId: get-spots
       responses:
         "200":
