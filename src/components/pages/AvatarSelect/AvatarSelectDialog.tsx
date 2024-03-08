@@ -23,7 +23,8 @@ export const AvatarSelectDialog = () => {
     <>
       <Button
         onClick={() => setIsModalOpen(true)}
-        className={styles.menuIcon}
+        type="link"
+        className={styles.settingButton}
         icon={<HiDotsVertical />}
       />
       <Modal
