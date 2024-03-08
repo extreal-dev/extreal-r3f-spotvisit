@@ -17,7 +17,7 @@
       "responses": [
         {
           "uuid": "2a1ba7c1-ac0a-4f15-b5ca-82df0ba70d18",
-          "body": "[\n  {\n    \"id\": \"\",\n    \"name\": \"\",\n    \"description\": \"\",\n    \"thumbnailImageUrl\": \"\",\n    \"sphericalImageUrl\": \"\",\n    \"sphericalVideoUrl\": \"\"\n  }\n]",
+          "body": "[\n  {\n    \"id\": \"ayutthaya1\",\n    \"name\": \"Ayutthaya\",\n    \"description\": \"The Ayutthaya Kingdom or the Empire of Ayutthaya was a Siamese kingdom that existed in Southeast Asia from 1351 to 1767, centered around the city of Ayutthaya, in Siam, or present-day Thailand.\",\n    \"thumbnailImageUrl\": \"./images/ayutthaya1-2d.png\",\n    \"sphericalImageUrl\": \"./images/ayutthaya1-3d.png\",\n    \"sphericalVideoUrl\": \"./videos/ayutthaya/ayutthaya1.m3u8\"\n  },\n  {\n    \"id\": \"ayutthaya2\",\n    \"name\": \"Ayutthaya Part II\",\n    \"description\": \"Ayutthaya is a historical city in Thailand, known for its majestic ruins, which include ancient temples, palaces, and statues. Once a prosperous Siamese capital, it is now a UNESCO World Heritage Site, attracting visitors with its rich history and architectural beauty.\",\n    \"thumbnailImageUrl\": \"./images/ayutthaya2-2d.png\",\n    \"sphericalImageUrl\": \"./images/ayutthaya2-3d.png\",\n    \"sphericalVideoUrl\": \"./videos/ayutthaya/ayutthaya1.m3u8\"\n  },\n  {\n    \"id\": \"ayutthaya3\",\n    \"name\": \"Ayutthaya Part III\",\n    \"description\": \"The Ayutthaya Historical Park houses the remnants of the old city of Ayutthaya, showcasing a blend of Siamese, Khmer, Sri Lankan, and Persian influences. Its ruins, characterized by prang (reliquary towers) and gigantic monasteries, offer a glimpse into Thailand's glorious past.\",\n    \"thumbnailImageUrl\": \"./images/ayutthaya3-2d.png\",\n    \"sphericalImageUrl\": \"./images/ayutthaya3-3d.png\",\n    \"sphericalVideoUrl\": \"./videos/ayutthaya/ayutthaya1.m3u8\"\n  },\n  {\n    \"id\": \"toyosu1\",\n    \"name\": \"Toyosu Part I\",\n    \"description\": \"Toyosu is a district in Tokyo, Japan, known for its modern waterfront development. It's home to the Toyosu Market, the world's largest wholesale fish market, which replaced the historic Tsukiji Market. The area also features residential towers, commercial spaces, and parks, making it a vibrant part of Tokyo's bay area\",\n    \"thumbnailImageUrl\": \"./images/toyosu1-2d.png\",\n    \"sphericalImageUrl\": \"./images/toyosu1-3d.png\",\n    \"sphericalVideoUrl\": \"./videos/toyosu1/toyosu1.m3u8\"\n  },\n  {\n    \"id\": \"toyosu2\",\n    \"name\": \"Toyosu Part II\",\n    \"description\": \"Toyosu is a district in the Koto Ward of Tokyo, Japan, known for its modern waterfront developments, including luxury high-rise apartments, commercial facilities, and parks. It is also famous for the Toyosu Market, one of the largest wholesale seafood and produce markets in the world, which replaced the historic Tsukiji Market in October 2018.\",\n    \"thumbnailImageUrl\": \"./images/toyosu2-2d.png\",\n    \"sphericalImageUrl\": \"./images/toyosu2-3d.png\",\n    \"sphericalVideoUrl\": \"./videos/toyosu2/toyosu2.m3u8\"\n  }\n]",
           "latency": 0,
           "statusCode": 200,
           "label": "OK",
@@ -35,7 +35,7 @@
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
-          "default": false,
+          "default": true,
           "crudKey": "id",
           "callbacks": []
         },
@@ -59,7 +59,7 @@
           "rulesOperator": "OR",
           "disableTemplating": false,
           "fallbackTo404": false,
-          "default": true,
+          "default": false,
           "crudKey": "id",
           "callbacks": []
         }
