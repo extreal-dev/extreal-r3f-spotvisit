@@ -1,0 +1,16 @@
+.header {
+  background: linear-gradient(to bottom, #808080ff, #cccccc00);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  height: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title {
+  color: white;
+  font-size: x-large;
+}
