@@ -1,0 +1,10 @@
+.card {
+  width: 300px;
+  margin: 5px;
+  padding: 10px;
+  background-color: springgreen;
+}
+
+.cardButton:global(.ant-btn) {
+  width: 50%;
+}
