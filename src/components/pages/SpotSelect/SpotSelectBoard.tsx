@@ -19,7 +19,6 @@ const SpotSelectBoard = () => {
   }
   if (data) {
     const spots = data.data;
-    console.warn("spots", data.data);
     return (
       <>
         <Layout>
