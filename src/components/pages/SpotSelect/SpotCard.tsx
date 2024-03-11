@@ -41,7 +41,7 @@ const SpotCard = (props: SpotCardProps) => {
               className={style.cardButton}
               block
             >
-              OK
+              Visit
             </Button>
           </>,
         ]}
