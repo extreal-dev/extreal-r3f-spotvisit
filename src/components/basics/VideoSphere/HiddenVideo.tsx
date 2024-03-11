@@ -26,11 +26,11 @@ export const HiddenVideo = (props: HiddenVideoProps) => {
     const handleMetadataLoaded = () => {
       const width = video.videoWidth;
       const height = video.videoHeight;
-      console.log("handleMetadataLoaded: " + width + " x " + height);
+      console.debug("handleMetadataLoaded: " + width + " x " + height);
       props.onVideoSize?.(width, height);
     };
 
-    console.log(
+    console.debug(
       "Browser:hls",
       Hls.isSupported(),
       ", ",
@@ -41,29 +41,29 @@ export const HiddenVideo = (props: HiddenVideoProps) => {
 
     const userAgent = window.navigator.userAgent.toLowerCase();
     let isSafari = false;
-    console.warn("!!! userAgent");
+    console.debug("!!! userAgent");
     if (userAgent.indexOf("msie") != -1 || userAgent.indexOf("trident") != -1) {
-      console.log("browser: Internet Explorer");
+      console.debug("browser: Internet Explorer");
     } else if (userAgent.indexOf("edge") != -1) {
-      console.log("browser: Edge");
+      console.debug("browser: Edge");
     } else if (userAgent.indexOf("chrome") != -1) {
-      console.log("browser: Google Chrome");
+      console.debug("browser: Google Chrome");
     } else if (userAgent.indexOf("safari") != -1) {
-      console.log("browser: Safari");
+      console.debug("browser: Safari");
       isSafari = true;
     }
     let isMobile = false;
     if (userAgent.indexOf("iphone") != -1) {
-      console.log("device: iPhone");
+      console.debug("device: iPhone");
       isMobile = true;
     } else if (userAgent.indexOf("ipad") != -1) {
-      console.log("device: iPad");
+      console.debug("device: iPad");
     } else if (userAgent.indexOf("android") != -1) {
       if (userAgent.indexOf("mobile") != -1) {
-        console.log("device: android");
+        console.debug("device: android");
         isMobile = true;
       } else {
-        console.log("device: android Tablet");
+        console.debug("device: android Tablet");
       }
     }
     const isSafariNoMobile = isSafari && !isMobile;
@@ -100,20 +100,20 @@ export const HiddenVideo = (props: HiddenVideoProps) => {
         }
       });
     } else if ("maybe" === video.canPlayType("application/vnd.apple.mpegurl")) {
-      console.log(
+      console.debug(
         "Safari: ",
         video.canPlayType("application/vnd.apple.mpegurl"),
       );
       video.src = props.videoSourceUrl;
       video.load();
-      console.log(
+      console.debug(
         "video size: " + video.videoWidth + " x " + video.videoHeight,
       );
       video.play().catch((error) => {
         console.error("Video play failed:", error);
       });
     } else {
-      console.warn("!!! video not played automatically");
+      console.debug("!!! video not played automatically");
     }
     if (video && video.style) {
       video.style.opacity = "0";
