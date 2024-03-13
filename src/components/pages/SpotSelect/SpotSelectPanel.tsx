@@ -1,10 +1,10 @@
 import { Col, Flex, Layout, Row } from "antd";
 import { Content, Header } from "antd/es/layout/layout";
 import SpotCard from "./SpotCard";
-import styles from "./SpotSelectBoard.module.css";
+import styles from "./SpotSelectPanel.module.css";
 import useSpots from "./useSpots";
 
-const SpotSelectBoard = () => {
+const SpotSelectPanel = () => {
   const { isLoading, data, error } = useSpots();
   if (isLoading) {
     return <>Loading...</>;
@@ -43,4 +43,4 @@ const SpotSelectBoard = () => {
   return <>No spots found</>;
 };
 
-export default SpotSelectBoard;
+export default SpotSelectPanel;
