@@ -8,6 +8,7 @@ import IconMenu from "@/components/basics/IconMenu/IconMenu";
 import ImageSphere from "@/components/basics/ImageSphere/ImageSphare";
 import { HiddenVideo } from "@/components/basics/VideoSphere/HiddenVideo";
 import VideoSphere from "@/components/basics/VideoSphere/VideoSphere";
+import AvatarSelect from "@/components/pages/AvatarSelect/AvatarSelect";
 import useSelectedSpotStore from "@/components/pages/SpotSelect/useSpotSelectStore";
 import usePlayerInput from "@/hooks/usePlayerInput";
 import { OrbitControls } from "@react-three/drei";
@@ -24,6 +25,7 @@ const InSpot = () => {
       {spotSelectStore.spotInfo && (
         <>
           <IconMenu />
+          <AvatarSelect />
           <div className={styles.canvasDiv}>
             <Canvas linear={true} flat={true}>
               {spotSelectStore.spotInfo.sphericalVideoUrl ? (
