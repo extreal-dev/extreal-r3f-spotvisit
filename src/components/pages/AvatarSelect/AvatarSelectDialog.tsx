@@ -1,32 +1,32 @@
 import useAvatarSelectStore from "@/components/basics/AvatarSelect/useAvatarSelectStore";
 import AvatarSelect from "@/components/pages/AvatarSelect/AvatarSelect";
-import { Button, Modal } from "antd";
-import { useState } from "react";
-import { HiDotsVertical } from "react-icons/hi";
-import styles from "./AvatarSelect.module.css";
+import { Modal } from "antd";
 
-export const AvatarSelectDialog = () => {
+export type AvatarSelectDialogProp = {
+  open: boolean;
+  onClose: () => void;
+};
+
+export const AvatarSelectDialog = (props: AvatarSelectDialogProp) => {
   const avatarSelectStore = useAvatarSelectStore();
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(
-    !avatarSelectStore.playerName || !avatarSelectStore.avatarType,
-  );
 
+  const isModalOpen = !(
+    avatarSelectStore.avatarType && avatarSelectStore.playerName
+  )
+    ? true
+    : props.open;
+
+  console.warn(isModalOpen);
   const handleOk = () => {
-    setIsModalOpen(false);
+    props.onClose();
   };
 
   const handleCancel = () => {
-    setIsModalOpen(false);
+    props.onClose();
   };
 
   return (
     <>
-      <Button
-        onClick={() => setIsModalOpen(true)}
-        type="link"
-        className={styles.settingButton}
-        icon={<HiDotsVertical />}
-      />
       <Modal
         title="Enter Profile"
         open={isModalOpen}

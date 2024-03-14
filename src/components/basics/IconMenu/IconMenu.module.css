@@ -18,17 +18,20 @@
   margin-left: 20px;
 }
 
-.spotName {
+.title {
   text-align: center;
   color: white;
   font-size: x-large;
 }
 
-.avatarSelect {
+.avatarSelectCol {
   text-align: end;
 }
 
-.canvasDiv {
-  margin-top: -80px;
-  height: 100vh;
+.avatarSelectButton {
+  background-color: transparent;
+  border: 0px;
+  color: white;
+  font-size: x-large;
+  margin-right: 20px;
 }
