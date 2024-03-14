@@ -2,27 +2,34 @@ import useAvatarSelectStore from "@/components/basics/AvatarSelect/useAvatarSele
 import AvatarSelect from "@/components/pages/AvatarSelect/AvatarSelect";
 import { Modal } from "antd";
 
-export interface AvatarSelectDialogProps {
-  isModalOpen: boolean;
-  setIsModalOpen: (isModalOpen: boolean) => void;
-}
+export type AvatarSelectDialogProp = {
+  open: boolean;
+  onClose: () => void;
+};
 
-export const AvatarSelectDialog = (props: AvatarSelectDialogProps) => {
+export const AvatarSelectDialog = (props: AvatarSelectDialogProp) => {
   const avatarSelectStore = useAvatarSelectStore();
 
+  const isModalOpen = !(
+    avatarSelectStore.avatarType && avatarSelectStore.playerName
+  )
+    ? true
+    : props.open;
+
+  console.warn(isModalOpen);
   const handleOk = () => {
-    props.setIsModalOpen(false);
+    props.onClose();
   };
 
   const handleCancel = () => {
-    props.setIsModalOpen(false);
+    props.onClose();
   };
 
   return (
     <>
       <Modal
         title="Enter Profile"
-        open={props.isModalOpen}
+        open={isModalOpen}
         onCancel={handleCancel}
         closable={
           !(!avatarSelectStore.playerName || !avatarSelectStore.setAvatarType)
