@@ -1,3 +1,4 @@
+import IconMenu from "@/components/basics/IconMenu/IconMenu";
 import ErrorPage from "@/components/pages/ErrorPage/ErrorPage";
 import InSpot from "@/components/pages/InSpot/InSpot";
 import SpotSelectPanel from "@/components/pages/SpotSelect/SpotSelectPanel";
@@ -21,6 +22,7 @@ function App() {
     <>
       <ErrorBoundary FallbackComponent={ErrorPage}>
         <QueryClientProvider client={queryClient}>
+          <IconMenu />
           {spotSelectStore.spotInfo ? <InSpot /> : <SpotSelectPanel />}
         </QueryClientProvider>
       </ErrorBoundary>

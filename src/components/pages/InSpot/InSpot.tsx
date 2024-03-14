@@ -4,7 +4,6 @@ import {
   defaultAvatarMap,
 } from "@/components/basics/Avatar/Avatar.function";
 import useAvatarSelectStore from "@/components/basics/AvatarSelect/useAvatarSelectStore";
-import IconMenu from "@/components/basics/IconMenu/IconMenu";
 import ImageSphere from "@/components/basics/ImageSphere/ImageSphare";
 import { HiddenVideo } from "@/components/basics/VideoSphere/HiddenVideo";
 import VideoSphere from "@/components/basics/VideoSphere/VideoSphere";
@@ -23,7 +22,6 @@ const InSpot = () => {
     <>
       {spotSelectStore.spotInfo && (
         <>
-          <IconMenu />
           <div className={styles.canvasDiv}>
             <Canvas linear={true} flat={true}>
               {spotSelectStore.spotInfo.sphericalVideoUrl ? (

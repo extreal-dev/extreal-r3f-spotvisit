@@ -1,7 +1,5 @@
-import { Col, Flex, Layout, Row } from "antd";
-import { Content, Header } from "antd/es/layout/layout";
+import { Flex } from "antd";
 import SpotCard from "./SpotCard";
-import styles from "./SpotSelectPanel.module.css";
 import useSpots from "./useSpots";
 
 const SpotSelectPanel = () => {
@@ -21,22 +19,11 @@ const SpotSelectPanel = () => {
     const spots = data.data;
     return (
       <>
-        <Layout>
-          <Header className={styles.header}>
-            <Row>
-              <Col>
-                <p className={styles.title}>Select Spot</p>
-              </Col>
-            </Row>
-          </Header>
-          <Content>
-            <Flex wrap="wrap">
-              {spots.map((spot) => (
-                <SpotCard key={spot.id} spot={spot} />
-              ))}
-            </Flex>
-          </Content>
-        </Layout>
+        <Flex wrap="wrap">
+          {spots.map((spot) => (
+            <SpotCard key={spot.id} spot={spot} />
+          ))}
+        </Flex>
       </>
     );
   }
