@@ -1,8 +1,26 @@
-.card {
+.cardArea {
   width: 300px;
+  border-radius: 10px;
   margin: 5px;
   padding: 10px;
   background-color: springgreen;
+}
+
+.card :global(.ant-card-body) {
+  padding: 0px;
+  background-color: white;
+}
+
+.cardTitle {
+  text-align: center;
+  font-size: large;
+  font-weight: bold;
+}
+
+.cardBody {
+  padding: 8px;
+  height: 200px;
+  overflow: auto;
 }
 
 .cardButton:global(.ant-btn) {
