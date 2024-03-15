@@ -1,29 +1,5 @@
-.header {
-  background: linear-gradient(to bottom, #808080ff, #cccccc00);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  height: auto;
-  width: 100%;
+.content {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
-.title {
-  color: white;
-  font-size: x-large;
-  text-align: center;
-}
-
-.avatarSelectCol {
-  text-align: end;
-}
-
-.avatarSelectButton {
-  background-color: transparent;
-  border: 0px;
-  color: white;
-  font-size: x-large;
-  margin-right: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
 }

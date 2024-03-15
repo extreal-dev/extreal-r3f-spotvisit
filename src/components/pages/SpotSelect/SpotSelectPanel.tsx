@@ -1,11 +1,12 @@
-import { Flex } from "antd";
+import { Spin } from "antd";
 import SpotCard from "./SpotCard";
+import styles from "./SpotSelectPanel.module.css";
 import useSpots from "./useSpots";
 
 const SpotSelectPanel = () => {
   const { isLoading, data, error } = useSpots();
   if (isLoading) {
-    return <>Loading...</>;
+    return <Spin fullscreen />;
   }
   if (error) {
     return (
@@ -19,11 +20,11 @@ const SpotSelectPanel = () => {
     const spots = data.data;
     return (
       <>
-        <Flex wrap="wrap">
+        <div className={styles.content}>
           {spots.map((spot) => (
             <SpotCard key={spot.id} spot={spot} />
           ))}
-        </Flex>
+        </div>
       </>
     );
   }

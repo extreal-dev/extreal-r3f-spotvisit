@@ -17,38 +17,26 @@ const SpotCard = (props: SpotCardProps) => {
   };
 
   return (
-    <>
+    <div className={style.cardArea}>
       <Card
         className={style.card}
         size="small"
-        cover={<img alt="example" src={spot.thumbnailImageUrl} />}
-        styles={{
-          body: {
-            height: "200px",
-            overflow: "hidden",
-            borderRadius: "0px",
-            backgroundColor: "white",
-          },
-          actions: {
-            border: "none",
-          },
-        }}
-        actions={[
-          <>
-            <Button
-              onClick={onSelectSpot}
-              type="primary"
-              className={style.cardButton}
-              block
-            >
-              Visit
-            </Button>
-          </>,
-        ]}
+        cover={<img alt="thumbnail" src={spot.thumbnailImageUrl} />}
       >
-        <Meta title={props.spot.name} description={props.spot.description} />
+        <p className={style.cardTitle}>{props.spot.name}</p>
+        <p className={style.cardBody}>{props.spot.description}</p>
+        <div className={style.cardButtonArea}>
+          <Button
+            onClick={onSelectSpot}
+            type="primary"
+            className={style.cardButton}
+            block
+          >
+            Visit
+          </Button>
+        </div>
       </Card>
-    </>
+    </div>
   );
 };
 
