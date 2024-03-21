@@ -28,12 +28,8 @@ export type MultiplayChannelComponentProps = {
 const MultiplayChannelComponent = (props: MultiplayChannelComponentProps) => {
   const channel = useMultiPlayChannelStore();
 
-  const {
-    groupName,
-    playerId: playerId,
-    onConnectedCallback,
-    onDisconnectedCallback,
-  } = props;
+  const { groupName, playerId, onConnectedCallback, onDisconnectedCallback } =
+    props;
 
   const { send } = useDataChannel(
     groupName,
