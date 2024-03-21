@@ -1,6 +1,6 @@
 import {
-  defaultAvatarFaceImageMap,
   defaultAvatarMap,
+  getAvatarFacePath,
 } from "@/components/basics/Avatar/Avatar.function";
 import useAvatarSelectStore from "@/components/basics/AvatarSelect/useAvatarSelectStore";
 import { Button, Col, Image, Input, Row, Select, Typography } from "antd";
@@ -56,10 +56,7 @@ export const AvatarSelect = (props: AvatarSelectProps) => {
           <Image
             width={100}
             height={100}
-            src={
-              defaultAvatarFaceImageMap[avatarType] ||
-              "public/avatar-faces/no-image.png"
-            }
+            src={getAvatarFacePath(avatarType)}
             preview={false}
             alt={avatarType || "No image"}
           />

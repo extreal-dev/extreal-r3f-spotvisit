@@ -16,7 +16,6 @@ export const AvatarSelectDialog = (props: AvatarSelectDialogProp) => {
     ? true
     : props.open;
 
-  console.warn(isModalOpen);
   const handleOk = () => {
     props.onClose();
   };
