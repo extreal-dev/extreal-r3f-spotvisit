@@ -34,7 +34,7 @@ const IconMenu = () => {
     spotSelectStore.setSpotInfo(undefined);
   };
 
-  const getConnectStatusIcon = () => {
+  const ConnectStatusIcon = () => {
     switch (channel.connectStatus) {
       case ConnectionState.Connected:
         return <MdConnectWithoutContact className={styles.connectedIcon} />;
@@ -88,7 +88,7 @@ const IconMenu = () => {
             }}
             type="link"
             className={styles.avatarSelectButton}
-            icon={getConnectStatusIcon()}
+            icon={ConnectStatusIcon()}
           />
           <Modal
             open={isMultiplayOpen}
