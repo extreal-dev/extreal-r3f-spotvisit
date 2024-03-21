@@ -1,21 +1,22 @@
-import { Avatar } from "@/components/basics/Avatar/Avatar";
-import {
-  defaultAnimationMap,
-  defaultAvatarMap,
-} from "@/components/basics/Avatar/Avatar.function";
+import { AvatarHandle } from "@/components/basics/Avatar/Avatar";
 import useAvatarSelectStore from "@/components/basics/AvatarSelect/useAvatarSelectStore";
 import ImageSphere from "@/components/basics/ImageSphere/ImageSphare";
+import Player from "@/components/basics/Player/Player";
+import RemotePlayerGroup from "@/components/basics/RemotePlayerGroup/RemotePlayerGroup";
 import { HiddenVideo } from "@/components/basics/VideoSphere/HiddenVideo";
 import VideoSphere from "@/components/basics/VideoSphere/VideoSphere";
 import useSelectedSpotStore from "@/components/pages/SpotSelect/useSpotSelectStore";
-import usePlayerInput from "@/hooks/usePlayerInput";
 import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
+import { MutableRefObject } from "react";
 import styles from "./InSpot.module.css";
 
-const InSpot = () => {
+export type InSpotProps = {
+  avatarRef: MutableRefObject<AvatarHandle | null>;
+};
+
+const InSpot = (props: InSpotProps) => {
   const avatarSelectStore = useAvatarSelectStore();
-  const playerInput = usePlayerInput();
   const spotSelectStore = useSelectedSpotStore();
 
   return (
@@ -34,11 +35,10 @@ const InSpot = () => {
               <OrbitControls />
               <ambientLight intensity={7} />
               {avatarSelectStore.avatarType && (
-                <Avatar
-                  avatarPath={defaultAvatarMap[avatarSelectStore.avatarType]}
-                  controller={playerInput.movement}
-                  animationMap={defaultAnimationMap}
-                ></Avatar>
+                <>
+                  <Player avatarRef={props.avatarRef} />
+                  <RemotePlayerGroup avatarRef={props.avatarRef} />
+                </>
               )}
             </Canvas>
           </div>
