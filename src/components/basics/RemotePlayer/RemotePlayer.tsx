@@ -1,7 +1,7 @@
 import { Avatar, AvatarHandle } from "@/components/basics/Avatar/Avatar";
 import {
   defaultAnimationMap,
-  defaultAvatarMap,
+  getAvatarPath,
 } from "@/components/basics/Avatar/Avatar.function";
 import RemotePlayerInfoMessage from "@/components/basics/Player/PlayerInfoMessage";
 import useRemotePlayerInfoMapStore from "@/components/basics/RemotePlayerGroup/useRemotePlayerGroupStore";
@@ -35,10 +35,7 @@ const RemotePlayer = (props: RemotePlayerProps) => {
     <>
       <Avatar
         ref={avatarRef}
-        avatarPath={
-          defaultAvatarMap[playerInfo.avatarType] ??
-          "public/avatars/michelle.vrm"
-        }
+        avatarPath={getAvatarPath(playerInfo.avatarType)}
         animationMap={defaultAnimationMap}
         controller={playerInfo.controller}
         currentMotion={playerInfo.motion}

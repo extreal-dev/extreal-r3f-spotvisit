@@ -16,3 +16,11 @@ export const defaultAvatarFaceImageMap: { [name: string]: string } = {
   Michelle: "./avatar-faces/face-michelle.png",
   Timmy: "./avatar-faces/face-timmy.png",
 };
+
+export const getAvatarPath = (avatarType: string): string => {
+  return defaultAvatarMap[avatarType] ?? "./avatars/michelle.vrm";
+};
+
+export const getAvatarFacePath = (avatarType: string): string => {
+  return defaultAvatarFaceImageMap[avatarType] ?? "./avatar-faces/no-image.png";
+};

@@ -1,7 +1,7 @@
 import { Avatar, AvatarHandle } from "@/components/basics/Avatar/Avatar";
 import {
   defaultAnimationMap,
-  defaultAvatarMap,
+  getAvatarPath,
 } from "@/components/basics/Avatar/Avatar.function";
 import useAvatarSelectStore from "@/components/basics/AvatarSelect/useAvatarSelectStore";
 import useMultiPlayChannelStore from "@/components/basics/Multiplay/useMultiplayChannelStore";
@@ -89,10 +89,7 @@ const Player = (props: PlayerProps) => {
     <>
       <Avatar
         ref={props.avatarRef}
-        avatarPath={
-          defaultAvatarMap[avatarSelectStore.avatarType] ??
-          "public/avatars/michelle.vrm"
-        }
+        avatarPath={getAvatarPath(avatarSelectStore.avatarType)}
         animationMap={defaultAnimationMap}
         controller={playerInput.movement}
       />

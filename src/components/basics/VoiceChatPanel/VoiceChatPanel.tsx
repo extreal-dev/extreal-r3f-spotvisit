@@ -1,4 +1,4 @@
-import { defaultAvatarFaceImageMap } from "@/components/basics/Avatar/Avatar.function";
+import { getAvatarFacePath } from "@/components/basics/Avatar/Avatar.function";
 import useAvatarSelectStore from "@/components/basics/AvatarSelect/useAvatarSelectStore";
 import useMultiPlayChannelStore from "@/components/basics/Multiplay/useMultiplayChannelStore";
 import useRemotePlayerInfoMapStore from "@/components/basics/RemotePlayerGroup/useRemotePlayerGroupStore";
@@ -43,7 +43,7 @@ const VoiceChatFace = (props: VoiceChatFaceProps) => {
       <Row justify="start" wrap={false}>
         <Col>
           <Avatar
-            src={defaultAvatarFaceImageMap[participant.avatarType]}
+            src={getAvatarFacePath(participant.avatarType)}
             size="large"
             className={avatarClassName}
           />
