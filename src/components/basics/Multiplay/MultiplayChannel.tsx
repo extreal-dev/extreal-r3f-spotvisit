@@ -75,7 +75,6 @@ const MultiplayChannelComponent = (props: MultiplayChannelComponentProps) => {
         send(msg, {});
       }
     }
-    channel.setConnectStatus(state);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state, channel.requestQueue.length]);
 
