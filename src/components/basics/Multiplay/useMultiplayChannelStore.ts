@@ -25,9 +25,17 @@ export type MultiPlayChannelStore = {
 const MAX_QUEUE_SIZE = 1000;
 
 const limitQueueSize = (queue: string[], item: string) => {
-  const newQueue = [...queue, item];
-  while (newQueue.length > MAX_QUEUE_SIZE) {
-    newQueue.shift();
+  const newQueue = queue.concat(...queue, item);
+  if (newQueue.length > MAX_QUEUE_SIZE) {
+    const count = newQueue.length - MAX_QUEUE_SIZE;
+    newQueue.splice(0, count);
+    console.warn(
+      "Queue size exceeds limit number " +
+        MAX_QUEUE_SIZE +
+        ", get rid of the first " +
+        count +
+        " elements.",
+    );
   }
   return newQueue;
 };
