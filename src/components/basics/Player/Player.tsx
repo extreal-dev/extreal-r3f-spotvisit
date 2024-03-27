@@ -9,19 +9,19 @@ import RemotePlayerInfoMessage, {
   RemotePlayerInfoMessageType,
 } from "@/components/basics/Player/PlayerInfoMessage";
 import useSelectedSpotStore from "@/components/pages/SpotSelect/useSpotSelectStore";
-import usePlayerInput from "@/hooks/usePlayerInput";
+import { CharacterController } from "@/hooks/usePlayerInput";
 import { MutableRefObject, useCallback, useEffect } from "react";
 
 export interface PlayerProps {
   avatarRef: MutableRefObject<AvatarHandle | null>;
+  movement: CharacterController;
 }
 
 const Player = (props: PlayerProps) => {
   const avatarSelectStore = useAvatarSelectStore();
   const selectedSpotStore = useSelectedSpotStore();
-  const playerInput = usePlayerInput();
+  const { movement, avatarRef } = props;
   const channel = useMultiPlayChannelStore();
-  const { avatarRef } = props;
 
   const enqueueUpdate = useCallback(
     (type: RemotePlayerInfoMessageType) => {
@@ -64,12 +64,12 @@ const Player = (props: PlayerProps) => {
       enqueueUpdate(RemotePlayerInfoMessageType.MOVE);
     }
   }, [
-    playerInput.movement.forward,
-    playerInput.movement.backward,
-    playerInput.movement.left,
-    playerInput.movement.right,
-    playerInput.movement.running,
-    playerInput.movement.jump,
+    movement.forward,
+    movement.backward,
+    movement.left,
+    movement.right,
+    movement.running,
+    movement.jump,
     channel.isConnected,
     enqueueUpdate,
   ]);
@@ -91,7 +91,7 @@ const Player = (props: PlayerProps) => {
         ref={props.avatarRef}
         avatarPath={getAvatarPath(avatarSelectStore.avatarType)}
         animationMap={defaultAnimationMap}
-        controller={playerInput.movement}
+        controller={movement}
       />
     </>
   );
