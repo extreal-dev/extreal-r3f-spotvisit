@@ -83,7 +83,7 @@ const ThirdPersonCamera = (props: ThirdPersonCameraProps) => {
       <OrbitControls
         ref={orbitControlsRef}
         makeDefault
-        // Prevent camera flipping and screen when moving backwards by limiting polar angles
+        // Prevent camera flipping when moving backwards by limiting polar angles
         minPolarAngle={Math.PI * 0.1}
         maxPolarAngle={Math.PI * 0.9}
         // Limit camera distance not to be inside Avatar
