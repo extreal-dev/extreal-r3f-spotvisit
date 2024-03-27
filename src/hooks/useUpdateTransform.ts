@@ -36,16 +36,16 @@ const useUpdateTransform = (
     if (controller.left || controller.right) {
       moveVector.addScaledVector(
         cameraLeftDirection,
+        // Opposite vector to handle with VRM update from 0.x to 1.0
         moveSpeed * (controller.left ? -1 : 1) * delta,
       );
     }
 
-    // Calculate the movement vector for forward/backward movement
     if (controller.forward || controller.backward) {
-      // Move forward or backward relative to the camera at a constant speed regardless of FPS
       moveVector.addScaledVector(
         // Camera's forward direction
         cameraLeftDirection.cross(camera.up),
+        // Opposite vector to handle with VRM update from 0.x to 1.0
         moveSpeed * (controller.forward ? -1 : 1) * delta,
       );
     }
