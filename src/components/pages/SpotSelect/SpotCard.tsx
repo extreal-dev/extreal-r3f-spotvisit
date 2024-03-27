@@ -2,7 +2,6 @@ import useSelectedSpotStore from "@/components/pages/SpotSelect/useSpotSelectSto
 import { SpotResponse } from "@/generated/model";
 import { Button, Card } from "antd";
 import style from "./SpotCard.module.css";
-const { Meta } = Card;
 
 export type SpotCardProps = {
   spot: SpotResponse;
@@ -20,7 +19,6 @@ const SpotCard = (props: SpotCardProps) => {
     <div className={style.cardArea}>
       <Card
         className={style.card}
-        size="small"
         cover={<img alt="thumbnail" src={spot.thumbnailImageUrl} />}
       >
         <p className={style.cardTitle}>{props.spot.name}</p>
