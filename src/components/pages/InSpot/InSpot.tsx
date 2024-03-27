@@ -3,26 +3,28 @@ import useAvatarSelectStore from "@/components/basics/AvatarSelect/useAvatarSele
 import ImageSphere from "@/components/basics/ImageSphere/ImageSphare";
 import Player from "@/components/basics/Player/Player";
 import RemotePlayerGroup from "@/components/basics/RemotePlayerGroup/RemotePlayerGroup";
+import ThirdPersonCamera from "@/components/basics/ThirdPersonCamera/ThirdPersonCamera";
 import { HiddenVideo } from "@/components/basics/VideoSphere/HiddenVideo";
 import VideoSphere from "@/components/basics/VideoSphere/VideoSphere";
+import { VirtualJoyStick } from "@/components/basics/VirtualJoyStick/VirtualJoyStick";
 import useSelectedSpotStore from "@/components/pages/SpotSelect/useSpotSelectStore";
-import { OrbitControls } from "@react-three/drei";
+import useVirtualJoyStickPlayerInput from "@/hooks/useVirtualJoyStickPlayerInput";
 import { Canvas } from "@react-three/fiber";
-import { MutableRefObject } from "react";
+import { useRef } from "react";
 import styles from "./InSpot.module.css";
 
-export type InSpotProps = {
-  avatarRef: MutableRefObject<AvatarHandle | null>;
-};
-
-const InSpot = (props: InSpotProps) => {
+const InSpot = () => {
   const avatarSelectStore = useAvatarSelectStore();
   const spotSelectStore = useSelectedSpotStore();
+  const { playerInput, handleJoystickData, startJump } =
+    useVirtualJoyStickPlayerInput();
+  const avatarRef = useRef<AvatarHandle | null>(null);
 
   return (
     <>
       {spotSelectStore.spotInfo && (
         <>
+          <VirtualJoyStick handle={handleJoystickData} startJump={startJump} />
           <div className={styles.canvasDiv}>
             <Canvas linear={true} flat={true}>
               {spotSelectStore.spotInfo.sphericalVideoUrl ? (
@@ -32,12 +34,18 @@ const InSpot = (props: InSpotProps) => {
                   imageSourceUrl={spotSelectStore.spotInfo.sphericalImageUrl}
                 />
               )}
-              <OrbitControls />
               <ambientLight intensity={7} />
+              <ThirdPersonCamera
+                movement={playerInput.movement}
+                avatarRef={avatarRef}
+              />
               {avatarSelectStore.avatarType && (
                 <>
-                  <Player avatarRef={props.avatarRef} />
-                  <RemotePlayerGroup avatarRef={props.avatarRef} />
+                  <Player
+                    avatarRef={avatarRef}
+                    movement={playerInput.movement}
+                  />
+                  <RemotePlayerGroup avatarRef={avatarRef} />
                 </>
               )}
             </Canvas>
