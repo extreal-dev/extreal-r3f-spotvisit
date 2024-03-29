@@ -1,4 +1,5 @@
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
+import { useState } from "react";
 import * as THREE from "three";
 import { GLTF } from "three/addons/loaders/GLTFLoader.js";
 import { CharacterController } from "./usePlayerInput";
@@ -7,35 +8,48 @@ const useUpdateTransform = (
   gltf: GLTF | null,
   controller: CharacterController | undefined,
 ) => {
+  const { camera } = useThree();
+  const [previousPosition, setPreviousPosition] = useState(new THREE.Vector3());
+
+  // For intuitive control, directions of Avatar movements are based on rotation of the camera.
+  // e.g. If user inputs left, Avatar moves to the left of the camera.
   const updateTransform = (delta: number) => {
     if (!gltf) return;
     if (!controller) return;
 
-    const walkSpeed = 3.0;
+    const walkSpeed = 4.0;
     const runMultiplier = 2.0;
-    const rotationSpeed = 3.0;
-
     const vrm = gltf.scene;
-    const forwardDirection = new THREE.Vector3(
-      -Math.sin(vrm.rotation.y),
-      0,
-      -Math.cos(vrm.rotation.y),
-    );
+
     const moveSpeed = controller.running
       ? walkSpeed * runMultiplier
       : walkSpeed;
 
+    // Camera's direction to the left
+    const cameraLeftDirection = camera
+      .getWorldDirection(new THREE.Vector3())
+      .cross(camera.up)
+      .normalize();
+
     const moveVector = new THREE.Vector3();
-    let rotateAngle = 0.0;
+
+    if (controller.left || controller.right) {
+      moveVector.addScaledVector(
+        cameraLeftDirection,
+        // Opposite vector to handle with VRM update from 0.x to 1.0
+        moveSpeed * (controller.left ? -1 : 1) * delta,
+      );
+    }
+
     if (controller.forward || controller.backward) {
       moveVector.addScaledVector(
-        forwardDirection,
+        // Camera's forward direction
+        cameraLeftDirection.cross(camera.up),
+        // Opposite vector to handle with VRM update from 0.x to 1.0
         moveSpeed * (controller.forward ? -1 : 1) * delta,
       );
     }
-    if (controller.left || controller.right) {
-      rotateAngle += rotationSpeed * (controller.left ? 1 : -1) * delta;
-    }
+
     if (controller.jump) {
       vrm.position.y += 0.07;
       controller.inAirCount -= 1;
@@ -43,14 +57,34 @@ const useUpdateTransform = (
         controller.jump = false;
       }
     } else {
-      vrm.rotation.x = 0;
       if (vrm.position.y > 0) {
         vrm.position.y -= 0.07;
+      }
+      if (controller.inAirCount > 0) {
         controller.inAirCount -= 1;
       }
     }
+
+    // Save the character's position before updating
+    const currentPosition = vrm.position.clone();
     vrm.position.add(moveVector);
-    vrm.rotation.y += rotateAngle;
+
+    // Calculate the character's rotation due to movement
+    // The direction of movement based on the position in the previous frame and the current frame
+    if (
+      previousPosition.x !== currentPosition.x ||
+      previousPosition.z !== currentPosition.z
+    ) {
+      const direction = currentPosition
+        .clone()
+        .sub(previousPosition)
+        .normalize();
+      // Add Math.PI to reverse the direction to handle with VRM v1.0
+      const angle = Math.atan2(direction.x, direction.z) + Math.PI;
+      vrm.rotation.y = angle;
+      // Set current position as the previous position
+      setPreviousPosition(currentPosition);
+    }
   };
 
   useFrame((_, delta) => {

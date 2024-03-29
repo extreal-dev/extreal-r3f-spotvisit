@@ -118,11 +118,12 @@ const IconMenu = () => {
               style: channel.isConnected
                 ? { backgroundColor: "red", borderColor: "red", color: "white" }
                 : {},
+              disabled: !groupName,
             }}
             destroyOnClose
           >
             <Row gutter={8}>
-              <Col span={channel.isConnected ? 20 : 24}>
+              <Col span={24}>
                 <Typography.Title level={5}>
                   {channel.isConnected
                     ? "Group Name"

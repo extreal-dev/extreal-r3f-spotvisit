@@ -20,7 +20,12 @@ const useUpdateMotion = (
       nextMotion = "Jump";
     } else if (control.running) {
       nextMotion = "Running";
-    } else if (control.forward || control.backward) {
+    } else if (
+      control.forward ||
+      control.backward ||
+      control.right ||
+      control.left
+    ) {
       nextMotion = "Walking";
     }
     if (currentAnimation.current !== nextMotion) {

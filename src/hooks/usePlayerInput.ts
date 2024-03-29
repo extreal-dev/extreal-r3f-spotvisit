@@ -51,7 +51,7 @@ const usePlayerInput = () => {
           nextMovement.left ||
           nextMovement.right;
       }
-      if ([" "].includes(event.key) && !currentMovement.jump) {
+      if ([" "].includes(event.key) && currentMovement.inAirCount <= 0) {
         nextMovement.jump = true;
         nextMovement.inAirCount = 30;
       }

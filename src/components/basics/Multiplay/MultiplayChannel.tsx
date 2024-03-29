@@ -1,4 +1,3 @@
-import { AvatarHandle } from "@/components/basics/Avatar/Avatar";
 import useMultiPlayChannelStore from "@/components/basics/Multiplay/useMultiplayChannelStore";
 import usePlayerInfoStore from "@/components/basics/Player/usePlayerStore";
 import VoiceChatPanel from "@/components/basics/VoiceChatPanel/VoiceChatPanel";
@@ -10,12 +9,11 @@ import {
   useDataChannel,
 } from "@livekit/components-react";
 import { ConnectionState } from "livekit-client";
-import { MutableRefObject, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export type MultiplayChannelProps = {
   livekitServerUrl: string;
   accessTokenUrl: string;
-  avatarRef: MutableRefObject<AvatarHandle | null>;
 };
 
 export type MultiplayChannelComponentProps = {
