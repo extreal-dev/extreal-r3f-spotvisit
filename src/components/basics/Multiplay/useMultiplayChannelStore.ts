@@ -1,7 +1,7 @@
 import { ConnectionState } from "livekit-client";
 import create from "zustand";
 
-export type MultiPlayChannelStore = {
+export type MultiplayChannelStore = {
   isConnected: boolean;
   setConnected: (val: boolean) => void;
   connectStatus: ConnectionState;
@@ -40,7 +40,7 @@ const limitQueueSize = (queue: string[], item: string) => {
   return newQueue;
 };
 
-export const useMultiPlayChannelStore = create<MultiPlayChannelStore>(
+export const useMultiplayChannelStore = create<MultiplayChannelStore>(
   (set, get) => ({
     isConnected: false,
     connectStatus: ConnectionState.Disconnected,
@@ -111,4 +111,4 @@ export const useMultiPlayChannelStore = create<MultiPlayChannelStore>(
   }),
 );
 
-export default useMultiPlayChannelStore;
+export default useMultiplayChannelStore;

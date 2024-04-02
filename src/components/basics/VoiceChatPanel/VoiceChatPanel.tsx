@@ -1,6 +1,6 @@
 import { getAvatarFacePath } from "@/components/basics/Avatar/Avatar.function";
 import useAvatarSelectStore from "@/components/basics/AvatarSelect/useAvatarSelectStore";
-import useMultiPlayChannelStore from "@/components/basics/Multiplay/useMultiplayChannelStore";
+import useMultiplayChannelStore from "@/components/basics/Multiplay/useMultiplayChannelStore";
 import useRemotePlayerInfoMapStore from "@/components/basics/RemotePlayerGroup/useRemotePlayerGroupStore";
 import {
   RoomAudioRenderer,
@@ -73,6 +73,12 @@ const VoiceChatFace = (props: VoiceChatFaceProps) => {
             )}
           </Col>
         )}
+        {participant.isLocal === false &&
+          (participant.audioMute ? (
+            <IoMdMicOff className={styles.micOffIcon} />
+          ) : (
+            <IoMdMic className={styles.micOnIcon} />
+          ))}
       </Row>
     </>
   );
@@ -146,7 +152,7 @@ const LocalVoiceChatFace = (props: LocalVoiceChatFaceProps) => {
     }
   };
 
-  const channel = useMultiPlayChannelStore();
+  const channel = useMultiplayChannelStore();
   useEffect(() => {
     if (channel.isConnected) {
       for (const key of tracks.keys()) {
@@ -162,7 +168,7 @@ const LocalVoiceChatFace = (props: LocalVoiceChatFaceProps) => {
 };
 
 const VoiceChatPanel = () => {
-  const channel = useMultiPlayChannelStore();
+  const channel = useMultiplayChannelStore();
   const room = useEnsureRoom();
   const rawParticipants = useParticipants({ room });
   const remotePlayerInfoMap = useRemotePlayerInfoMapStore();
