@@ -11,6 +11,8 @@ export type RemotePlayerInfo = {
   position?: THREE.Vector3;
   rotation?: THREE.Euler;
   spotKey?: string;
+  cameraDirection: THREE.Vector3;
+  cameraUp: THREE.Vector3;
 };
 
 export type RemotePlayerInfoMapStore = {
