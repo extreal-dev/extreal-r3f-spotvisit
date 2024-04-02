@@ -4,7 +4,7 @@ import useUpdateTransform from "@/hooks/useUpdateTransform";
 import useLoadVRM from "@/hooks/useVRM";
 import useVRMAnimation from "@/hooks/useVRMAnimation";
 import { Html } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useFrame, useThree } from "@react-three/fiber";
 import {
   Dispatch,
   SetStateAction,
@@ -31,6 +31,8 @@ export interface AvatarProps {
   onLoad?: () => void;
   remotePosition?: THREE.Vector3;
   remoteRotation?: THREE.Euler;
+  remoteCameraDirection?: THREE.Vector3;
+  remoteCameraUp?: THREE.Vector3;
 }
 
 export type AvatarHandle = {
@@ -55,7 +57,6 @@ export const Avatar = forwardRef((props: AvatarProps, ref) => {
     avatarPath: props.avatarPath,
   });
   const avatarRef = useRef<THREE.Group | null>(null);
-
   const setAnimation = useVRMAnimation({
     gltf,
     avatarRef,
@@ -96,19 +97,30 @@ export const Avatar = forwardRef((props: AvatarProps, ref) => {
       }
       isLoaded.current = true;
     }
-  }, [gltf, onLoad]);
+  }, [gltf, onLoad, props.remotePosition, props.remoteRotation]);
 
   const setPosition = (pos: THREE.Vector3) => {
     gltf?.scene.position.copy(pos);
   };
 
-  useUpdateTransform(gltf, props.controller);
-  useUpdateMotion(gltf, setAnimation, props.controller);
-
+  const [prevPosition, setPrevPosition] = useState(
+    gltf?.scene.position ?? new THREE.Vector3(),
+  );
   const [prevRemotePosition, setPrevRemotePosition] =
     useState<THREE.Vector3 | null>(null);
   const [prevRemoteRotation, setPrevRemoteRotation] =
     useState<THREE.Euler | null>(null);
+  const { camera } = useThree();
+
+  useUpdateTransform(
+    gltf,
+    props.controller,
+    props.remoteCameraDirection ??
+      camera.getWorldDirection(new THREE.Vector3()),
+    props.remoteCameraUp ?? camera.up,
+    prevPosition,
+  );
+  useUpdateMotion(gltf, setAnimation, props.controller);
 
   useFrame(() => {
     if (!gltf) {
@@ -124,6 +136,17 @@ export const Avatar = forwardRef((props: AvatarProps, ref) => {
       const vrm = gltf.scene;
       vrm.rotation.copy(props.remoteRotation);
       setPrevRemoteRotation(props.remoteRotation);
+    }
+
+    // Save the character's position before updating
+    const currentPosition = gltf.scene.position;
+    if (currentPosition) {
+      if (
+        prevPosition.x !== currentPosition.x ||
+        prevPosition.z !== currentPosition.z
+      ) {
+        setPrevPosition(currentPosition);
+      }
     }
   });
 
