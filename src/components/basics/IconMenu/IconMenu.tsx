@@ -1,7 +1,6 @@
-import useMultiPlayChannelStore from "@/components/basics/Multiplay/useMultiplayChannelStore";
+import useMultiplayChannelStore from "@/components/basics/Multiplay/useMultiplayChannelStore";
 import usePlayerInfoStore from "@/components/basics/Player/usePlayerStore";
 import AvatarSelectDialog from "@/components/pages/AvatarSelect/AvatarSelectDialog";
-import useSelectedSpotStore from "@/components/pages/SpotSelect/useSpotSelectStore";
 import MultiplayUtil from "@/libs/util/MultiplayUtil";
 import { Button, Col, Input, Modal, Row, Typography } from "antd";
 import { ConnectionState } from "livekit-client";
@@ -19,9 +18,8 @@ import styles from "./IconMenu.module.css";
 const shortUuidUserName = MultiplayUtil.generateShortUUID();
 
 const IconMenu = () => {
-  const spotSelectStore = useSelectedSpotStore();
   const playerInfo = usePlayerInfoStore();
-  const channel = useMultiPlayChannelStore();
+  const channel = useMultiplayChannelStore();
   const [isAvatarSelectOpen, setIsAvatarSelectOpen] = useState(false);
   const [isMultiplayOpen, setIsMultiplayOpen] = useState(false);
   const [groupName, setGroupName] = useState("");
@@ -31,7 +29,7 @@ const IconMenu = () => {
   };
 
   const onBack = () => {
-    spotSelectStore.setSpotInfo(undefined);
+    playerInfo.setSpotInfo(undefined);
   };
 
   const ConnectStatusIcon = () => {
@@ -58,7 +56,7 @@ const IconMenu = () => {
     <>
       <Row className={styles.header}>
         <Col span={8}>
-          {spotSelectStore.spotInfo && (
+          {playerInfo.spotInfo && (
             <>
               <Button
                 onClick={onBack}
@@ -75,8 +73,8 @@ const IconMenu = () => {
           )}
         </Col>
         <Col span={8} className={styles.title}>
-          {spotSelectStore.spotInfo ? (
-            <p>{spotSelectStore.spotInfo.name}</p>
+          {playerInfo.spotInfo ? (
+            <p>{playerInfo.spotInfo.name}</p>
           ) : (
             <p>Select Spot</p>
           )}
