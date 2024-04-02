@@ -4,12 +4,13 @@ import {
   getAvatarPath,
 } from "@/components/basics/Avatar/Avatar.function";
 import useAvatarSelectStore from "@/components/basics/AvatarSelect/useAvatarSelectStore";
-import useMultiPlayChannelStore from "@/components/basics/Multiplay/useMultiplayChannelStore";
+import useMultiplayChannelStore from "@/components/basics/Multiplay/useMultiplayChannelStore";
 import RemotePlayerInfoMessage, {
   RemotePlayerInfoMessageType,
 } from "@/components/basics/Player/PlayerInfoMessage";
-import useSelectedSpotStore from "@/components/pages/SpotSelect/useSpotSelectStore";
+import usePlayerInfoStore from "@/components/basics/Player/usePlayerStore";
 import { CharacterController } from "@/hooks/usePlayerInput";
+import { useThree } from "@react-three/fiber";
 import { MutableRefObject, useCallback, useEffect } from "react";
 
 export interface PlayerProps {
@@ -19,16 +20,17 @@ export interface PlayerProps {
 
 const Player = (props: PlayerProps) => {
   const avatarSelectStore = useAvatarSelectStore();
-  const selectedSpotStore = useSelectedSpotStore();
+  const playerInfo = usePlayerInfoStore();
   const { movement, avatarRef } = props;
-  const channel = useMultiPlayChannelStore();
+  const channel = useMultiplayChannelStore();
+  const { camera } = useThree();
 
   const enqueueUpdate = useCallback(
     (type: RemotePlayerInfoMessageType) => {
       if (
         channel.isConnected &&
         channel.playerId &&
-        selectedSpotStore.spotInfo &&
+        playerInfo.spotInfo &&
         avatarRef.current
       ) {
         const msg = RemotePlayerInfoMessage.toPayload(
@@ -37,7 +39,8 @@ const Player = (props: PlayerProps) => {
           avatarSelectStore.playerName,
           avatarSelectStore.avatarType,
           avatarRef.current,
-          selectedSpotStore.spotInfo.id,
+          playerInfo.spotInfo.id,
+          camera,
         );
 
         channel.enqueueRequest(msg);
@@ -47,7 +50,7 @@ const Player = (props: PlayerProps) => {
     [
       channel.isConnected,
       channel.playerId,
-      selectedSpotStore.spotInfo,
+      playerInfo.spotInfo,
       avatarSelectStore.avatarType,
       avatarSelectStore.playerName,
     ],
@@ -70,6 +73,9 @@ const Player = (props: PlayerProps) => {
     movement.right,
     movement.running,
     movement.jump,
+    movement.cameraPosition.x,
+    movement.cameraPosition.y,
+    movement.cameraPosition.z,
     channel.isConnected,
     enqueueUpdate,
   ]);
