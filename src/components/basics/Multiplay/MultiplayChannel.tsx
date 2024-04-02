@@ -1,5 +1,4 @@
-import useMultiPlayChannelStore from "@/components/basics/Multiplay/useMultiplayChannelStore";
-import usePlayerInfoStore from "@/components/basics/Player/usePlayerStore";
+import useMultiplayChannelStore from "@/components/basics/Multiplay/useMultiplayChannelStore";
 import VoiceChatPanel from "@/components/basics/VoiceChatPanel/VoiceChatPanel";
 import MultiplayUtil from "@/libs/util/MultiplayUtil";
 import { ReceivedDataMessage } from "@livekit/components-core";
@@ -14,6 +13,12 @@ import { useEffect, useState } from "react";
 export type MultiplayChannelProps = {
   livekitServerUrl: string;
   accessTokenUrl: string;
+  connect: boolean;
+  audio: boolean;
+  roomName: string;
+  userName: string;
+  onJoinCallback?: () => void;
+  onLeaveCallback?: () => void;
 };
 
 export type MultiplayChannelComponentProps = {
@@ -24,7 +29,7 @@ export type MultiplayChannelComponentProps = {
 };
 
 const MultiplayChannelComponent = (props: MultiplayChannelComponentProps) => {
-  const channel = useMultiPlayChannelStore();
+  const channel = useMultiplayChannelStore();
 
   const { groupName, playerId, onConnectedCallback, onDisconnectedCallback } =
     props;
@@ -82,30 +87,22 @@ const MultiplayChannelComponent = (props: MultiplayChannelComponentProps) => {
 const MultiplayChannel = (props: MultiplayChannelProps) => {
   const [accessToken, setAccessToken] = useState("");
   const { livekitServerUrl, accessTokenUrl } = props;
-  const playerInfo = usePlayerInfoStore();
-  const connect = playerInfo.multiplayConnect;
-  const audio = playerInfo.multiplayAudio;
-  const groupName = playerInfo.multiplayGroupName ?? "";
-  const playerId = playerInfo.multiplayPlayerId ?? "";
-
-  const onJoinCallback = () => {
-    console.debug("Join, Connected.");
-  };
-  const onLeaveCallback = () => {
-    playerInfo.setMultiplayGroupName("");
-    playerInfo.setMultiplayPlayerId("");
-    playerInfo.setMultiplayAudio(false);
-    playerInfo.setMultiplayConnect(false);
-    console.debug("Leave, Disconnected.");
-  };
+  const {
+    connect,
+    audio,
+    roomName,
+    userName,
+    onLeaveCallback,
+    onJoinCallback,
+  } = props;
 
   useEffect(() => {
     if (connect) {
       (async () => {
         const ac = await MultiplayUtil.getAccessToken(
           accessTokenUrl,
-          groupName,
-          playerId,
+          roomName,
+          userName,
         );
         setAccessToken(ac ?? "");
       })();
@@ -129,8 +126,8 @@ const MultiplayChannel = (props: MultiplayChannelProps) => {
         video={false}
       >
         <MultiplayChannelComponent
-          groupName={groupName}
-          playerId={playerId}
+          groupName={roomName}
+          playerId={userName}
           onConnectedCallback={onJoinCallback}
           onDisconnectedCallback={onLeaveCallback}
         />

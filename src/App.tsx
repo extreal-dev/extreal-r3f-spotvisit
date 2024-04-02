@@ -1,9 +1,9 @@
 import IconMenu from "@/components/basics/IconMenu/IconMenu";
 import MultiplayChannel from "@/components/basics/Multiplay/MultiplayChannel";
+import usePlayerInfoStore from "@/components/basics/Player/usePlayerStore";
 import ErrorPage from "@/components/pages/ErrorPage/ErrorPage";
 import InSpot from "@/components/pages/InSpot/InSpot";
 import SpotSelectPanel from "@/components/pages/SpotSelect/SpotSelectPanel";
-import useSelectedSpotStore from "@/components/pages/SpotSelect/useSpotSelectStore";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ErrorBoundary } from "react-error-boundary";
 import "./App.css";
@@ -17,7 +17,22 @@ const queryClient: QueryClient = new QueryClient({
 });
 
 function App() {
-  const spotSelectStore = useSelectedSpotStore();
+  const playerInfo = usePlayerInfoStore();
+  const connect = playerInfo.multiplayConnect;
+  const audio = playerInfo.multiplayAudio;
+  const groupName = playerInfo.multiplayGroupName ?? "";
+  const playerId = playerInfo.multiplayPlayerId ?? "";
+
+  const onJoinCallback = () => {
+    console.debug("Join, Connected.");
+  };
+  const onLeaveCallback = () => {
+    playerInfo.setMultiplayGroupName("");
+    playerInfo.setMultiplayPlayerId("");
+    playerInfo.setMultiplayAudio(false);
+    playerInfo.setMultiplayConnect(false);
+    console.debug("Leave, Disconnected.");
+  };
 
   return (
     <>
@@ -27,8 +42,14 @@ function App() {
           <MultiplayChannel
             livekitServerUrl="ws://localhost:7880"
             accessTokenUrl="http://localhost:3001/getToken"
+            connect={connect}
+            audio={audio}
+            roomName={groupName}
+            userName={playerId}
+            onJoinCallback={onJoinCallback}
+            onLeaveCallback={onLeaveCallback}
           />
-          {spotSelectStore.spotInfo ? <InSpot /> : <SpotSelectPanel />}
+          {playerInfo.spotInfo ? <InSpot /> : <SpotSelectPanel />}
         </QueryClientProvider>
       </ErrorBoundary>
     </>
