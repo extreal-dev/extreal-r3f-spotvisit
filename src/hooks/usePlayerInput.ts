@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import * as THREE from "three";
 
 export interface CharacterController {
   forward: boolean;
@@ -8,6 +9,7 @@ export interface CharacterController {
   running: boolean;
   jump: boolean;
   inAirCount: number;
+  cameraPosition: THREE.Vector3;
 }
 
 const usePlayerInput = () => {
@@ -19,6 +21,7 @@ const usePlayerInput = () => {
     running: false,
     jump: false,
     inAirCount: 0,
+    cameraPosition: new THREE.Vector3(),
   } as CharacterController);
 
   const handleKeyDown = (event: KeyboardEvent) => {

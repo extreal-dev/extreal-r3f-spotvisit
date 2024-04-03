@@ -4,8 +4,8 @@ import {
   getAvatarPath,
 } from "@/components/basics/Avatar/Avatar.function";
 import RemotePlayerInfoMessage from "@/components/basics/Player/PlayerInfoMessage";
+import usePlayerInfoStore from "@/components/basics/Player/usePlayerStore";
 import useRemotePlayerInfoMapStore from "@/components/basics/RemotePlayerGroup/useRemotePlayerGroupStore";
-import useSelectedSpotStore from "@/components/pages/SpotSelect/useSpotSelectStore";
 import { useRef } from "react";
 
 export type RemotePlayerProps = {
@@ -16,31 +16,33 @@ export type RemotePlayerProps = {
 const RemotePlayer = (props: RemotePlayerProps) => {
   const { playerId, remotePlayerInfoMsg } = props;
   const remotePlayerInfoMap = useRemotePlayerInfoMapStore();
-  const selectedspotStore = useSelectedSpotStore();
+  const playerInfo = usePlayerInfoStore();
   const avatarRef = useRef<AvatarHandle | null>(null);
-  let playerInfo = remotePlayerInfoMap.getItem(playerId);
+  let remotePlayerInfo = remotePlayerInfoMap.getItem(playerId);
 
-  if (!playerInfo) {
+  if (!remotePlayerInfo) {
     console.debug("playerInfo is not defined");
     return <>error</>;
   }
-  if (playerInfo.spotKey !== selectedspotStore.spotInfo?.id) {
+  if (remotePlayerInfo.spotKey !== playerInfo.spotInfo?.id) {
     return <></>;
   }
   if (remotePlayerInfoMsg?.remotePlayerInfo) {
-    playerInfo = remotePlayerInfoMsg.remotePlayerInfo;
+    remotePlayerInfo = remotePlayerInfoMsg.remotePlayerInfo;
   }
 
   return (
     <>
       <Avatar
         ref={avatarRef}
-        avatarPath={getAvatarPath(playerInfo.avatarType)}
+        avatarPath={getAvatarPath(remotePlayerInfo.avatarType)}
         animationMap={defaultAnimationMap}
-        controller={playerInfo.controller}
-        currentMotion={playerInfo.motion}
-        remotePosition={playerInfo.position}
-        remoteRotation={playerInfo.rotation}
+        controller={remotePlayerInfo.controller}
+        currentMotion={remotePlayerInfo.motion}
+        remotePosition={remotePlayerInfo.position}
+        remoteRotation={remotePlayerInfo.rotation}
+        remoteCameraDirection={remotePlayerInfo.cameraDirection}
+        remoteCameraUp={remotePlayerInfo.cameraUp}
       />
     </>
   );

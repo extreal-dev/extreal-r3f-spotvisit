@@ -1,3 +1,4 @@
+import { SpotResponse } from "@/generated/model";
 import create from "zustand";
 
 export type PlayerInfo = {
@@ -5,6 +6,8 @@ export type PlayerInfo = {
   multiplayAudio: boolean;
   multiplayGroupName?: string;
   multiplayPlayerId?: string;
+  spotInfo: SpotResponse | undefined;
+  setSpotInfo: (arg: SpotResponse | undefined) => void;
   setMultiplayConnect: (val: boolean) => void;
   setMultiplayAudio: (val: boolean) => void;
   setMultiplayGroupName: (val: string | undefined) => void;
@@ -24,6 +27,9 @@ const usePlayerInfoStore = create<PlayerInfo>((set) => ({
     set((state) => ({ ...state, multiplayGroupName: val })),
   setMultiplayPlayerId: (val: string) =>
     set((state) => ({ ...state, multiplayPlayerId: val })),
+  spotInfo: undefined,
+  setSpotInfo: (selectedSpotInfo: SpotResponse | undefined) =>
+    set(() => ({ spotInfo: selectedSpotInfo })),
 }));
 
 export default usePlayerInfoStore;

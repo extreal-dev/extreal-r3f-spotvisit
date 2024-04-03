@@ -1,12 +1,21 @@
 import { AvatarHandle } from "@/components/basics/Avatar/Avatar";
 import { CharacterController } from "@/hooks/usePlayerInput";
 import { OrbitControls, OrbitControlsProps } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
-import { MutableRefObject, useEffect, useMemo, useRef, useState } from "react";
+import { useFrame, useThree } from "@react-three/fiber";
+import {
+  Dispatch,
+  MutableRefObject,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import * as THREE from "three";
 
 export type ThirdPersonCameraProps = {
   movement: CharacterController;
+  setMovement: Dispatch<SetStateAction<CharacterController>>;
   avatarRef: MutableRefObject<AvatarHandle | null>;
   cameraOffset?: THREE.Vector3;
   targetOffset?: THREE.Vector3;
@@ -18,6 +27,7 @@ const ThirdPersonCamera = (props: ThirdPersonCameraProps) => {
   // Drei currently does not forward Ref of OrbitControls(https://github.com/pmndrs/drei/issues/937)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const orbitControlsRef = useRef<any>(null);
+  const lastUpdateTime = useRef(performance.now());
   const { movement, avatarRef } = props;
   const initialCameraOffset = useMemo(
     () => props.cameraOffset ?? new THREE.Vector3(0, 2, -5),
@@ -30,7 +40,10 @@ const ThirdPersonCamera = (props: ThirdPersonCameraProps) => {
   const [distance, setDistance] = useState(
     initialCameraOffset.distanceTo(new THREE.Vector3()),
   );
+  const [cameraMove, setCameraMove] = useState(false);
   const enableZoomAndPan = props.enableZoomAndPan ?? true;
+
+  const { camera } = useThree();
 
   // Initiate Camera Position by Avatar Load and changes
   useEffect(() => {
@@ -78,15 +91,35 @@ const ThirdPersonCamera = (props: ThirdPersonCameraProps) => {
     }
   });
 
+  // Throttle the camera position settings
+  // 3000ms interval avoids excessive requests and ensures accuracy
+  const interval = 3000;
+  useFrame(() => {
+    const now = performance.now();
+    if (now - lastUpdateTime.current >= interval) {
+      if (cameraMove) {
+        props.setMovement((state) => ({
+          ...state,
+          cameraPosition: camera.position,
+        }));
+      }
+      lastUpdateTime.current = now;
+    }
+  });
+
   return (
     <>
       <OrbitControls
+        onStart={() => setCameraMove(true)}
+        onEnd={() => setCameraMove(false)}
         ref={orbitControlsRef}
         makeDefault
-        // Prevent camera flipping when moving backwards by limiting polar angles
+        // Prevent Gimbal lock by limiting polar angles
+        // 0.1 to 0.9 is ideal for free camera control
         minPolarAngle={Math.PI * 0.1}
         maxPolarAngle={Math.PI * 0.9}
-        // Limit camera distance not to be inside Avatar
+        // Limit camera distance so that it does not enter inside Avatar and is not too far away
+        // 2.0 to 10.0 is ideal for both PC and mobile devices
         minDistance={2.0}
         maxDistance={10.0}
         enableZoom={enableZoomAndPan}

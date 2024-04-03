@@ -1,4 +1,4 @@
-import useSelectedSpotStore from "@/components/pages/SpotSelect/useSpotSelectStore";
+import usePlayerInfoStore from "@/components/basics/Player/usePlayerStore";
 import { SpotResponse } from "@/generated/model";
 import { Button, Card } from "antd";
 import style from "./SpotCard.module.css";
@@ -9,10 +9,9 @@ export type SpotCardProps = {
 
 const SpotCard = (props: SpotCardProps) => {
   const spot = props.spot;
-  const selectedSpotStore = useSelectedSpotStore();
-
+  const playerInfo = usePlayerInfoStore();
   const onSelectSpot = () => {
-    selectedSpotStore.setSpotInfo(props.spot);
+    playerInfo.setSpotInfo(props.spot);
   };
 
   return (
