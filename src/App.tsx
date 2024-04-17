@@ -40,8 +40,8 @@ function App() {
         <QueryClientProvider client={queryClient}>
           <IconMenu />
           <MultiplayChannel
-            livekitServerUrl="ws://localhost:7880"
-            accessTokenUrl="http://localhost:3001/getToken"
+            livekitServerUrl={import.meta.env.VITE_LIVEKIT_SERVER_URL}
+            accessTokenUrl={import.meta.env.VITE_ACCESS_TOKEN_SERVER_URL}
             connect={connect}
             audio={audio}
             roomName={groupName}
