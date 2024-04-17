@@ -1,29 +1,28 @@
 import cors from "cors";
+import "dotenv/config";
 import express from "express";
 import { AccessToken } from "livekit-server-sdk";
 
-// Function to create a token, now accepts roomName and participantName as arguments
+const apiKey = process.env.ACCESS_TOKEN_SERVER_API_KEY;
+const apiSecret = process.env.ACCESS_TOKEN_SERVER_API_SECRET;
+const tokenTimeToLive = process.env.ACCESS_TOKEN_SERVER_TOKEN_TTL;
+const port = Number(process.env.ACCESS_TOKEN_SERVER_PORT);
+
 const createToken = async (roomName, participantName) => {
-  const at = new AccessToken("devkey", "secret", {
+  const at = new AccessToken(apiKey, apiSecret, {
     identity: participantName,
-    // Token expires after 10 minutes
-    ttl: "10m",
+    ttl: tokenTimeToLive,
   });
   at.addGrant({ roomJoin: true, room: roomName });
-
   return await at.toJwt();
 };
 
 const app = express();
 app.use(cors());
 
-const port = 3001;
-
-// Modify GET request handler to extract roomName and participantName from query parameters
 app.get("/getToken", async (req, res) => {
   const { roomName, participantName } = req.query;
 
-  // Add parameter validation
   if (!roomName || !participantName) {
     return res
       .status(400)
