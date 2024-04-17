@@ -1,44 +1,63 @@
-# React + TypeScript + Vite
+# Spot Visit
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## How to Start Spot Visit
 
-Currently, two official plugins are available:
+### Start Livekit Server
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Download and install latest release of Livekit from here](https://github.com/livekit/livekit/releases "releases of Livekit")  
+ To start Livekit Server, execute the following command.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
-    project: ["./tsconfig.json", "./tsconfig.node.json"],
-    tsconfigRootDir: __dirname,
-  },
-};
+```text
+livekit-server --dev
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Start Access Token Server for Livekit
 
-# backend API integration
+Access Token Server generates access token for Livekit Server.  
+To start Access Token Server, execute the following command.
 
-## Run mock API server
-
+```text
+cd livekit-server
+npm run start
 ```
+
+For datails, refer to the `./livekit-server/README.md`
+
+### Start API Mock Server
+
+Backend API is provided as mock server.  
+To start API Mock Server, execute the following command.
+
+```text
 npm run api-mock
 ```
 
-## Generate API client code (when you needed.)
+### Start Spot Visit
 
+```text
+npm run dev
 ```
+
+## Optional Configuration
+
+### (Optional) Create Environment Variable Files with Template
+
+- Create environment variable files as needed(e.g., `.env.local`, `.env.development`)
+- You need to define the following environment variables
+- You can use the`.env` file as a template with the default values shown below
+- **Confirm that the port number of `VITE_ACCESS_TOKEN_SERVER_URL` matches the `ACCESS_TOKEN_SERVER_PORT` in the `./livekit/.env`**
+
+| Environment Variables                | Description                           |                    Default Value |
+| :----------------------------------- | :------------------------------------ | -------------------------------: |
+| VITE_LIVEKIT_SERVER_URL              | Livekit Server URL                    |            `ws://localhost:7880` |
+| VITE_ACCESS_TOKEN_SERVER_URL         | Access Token Server URL               | `http://localhost:5101/getToken` |
+| VITE_API_MOCK_SERVER_URL             | API Mock Server URL                   |          `http://localhost:5100` |
+| VITE_API_MOCK_SERVER_REQUEST_TIMEOUT | API Mock Server Timeout (millisecond) |                          `15000` |
+
+### (Optional) Generate API client code (when you edit `openapi.yaml`)
+
+To generate API client code, execute the following command.
+
+```text
 npm run api-codegen
 ```
