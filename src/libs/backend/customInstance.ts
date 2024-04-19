@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import Axios, {
   AxiosError,
   AxiosInstance,
@@ -9,15 +8,13 @@ import Axios, {
 export class RequestTimeoutError extends Error {}
 export type ErrorType<Error> = AxiosError<Error>;
 
-// Change to refer environment variable if you needed
-const timeout = 15000;
+const timeout = import.meta.env.VITE_API_MOCK_SERVER_REQUEST_TIMEOUT;
+const backendUrl: string = import.meta.env.VITE_API_MOCK_SERVER_URL;
+
 const REQUEST_TIMEOUT: number | undefined = isNaN(timeout)
   ? undefined
   : timeout;
 
-// Change to refer environment variable if you needed
-const BASE_URL: string = "http://localhost:3000";
-const backendUrl = `${BASE_URL}`;
 const AXIOS_INSTANCE = Axios.create({ baseURL: backendUrl });
 
 const getDefaultAxiosConfig = () => {
