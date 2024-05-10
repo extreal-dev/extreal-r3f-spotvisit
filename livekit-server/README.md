@@ -8,6 +8,7 @@ Access Token Server generates access token for Livekit Server.
 To start Access Token Server, execute the following command.
 
 ```text
+npm i
 npm run start
 ```
 

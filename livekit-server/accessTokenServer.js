@@ -21,15 +21,20 @@ const app = express();
 app.use(cors());
 
 app.get("/getToken", async (req, res) => {
-  const { roomName, participantName } = req.query;
+  const { RoomName, ParticipantName } = req.query;
 
-  if (!roomName || !participantName) {
+  if (!RoomName || !ParticipantName) {
     return res
       .status(400)
       .send("Both roomName and participantName are required.");
   }
 
-  res.send(await createToken(roomName, participantName));
+  const accessToken = await createToken(RoomName, ParticipantName);
+  res.send({
+    RoomName: RoomName,
+    ParticipantName: ParticipantName,
+    AccessToken: accessToken,
+  });
 });
 
 app.listen(port, () => {

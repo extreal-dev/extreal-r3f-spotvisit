@@ -1,5 +1,5 @@
 import useMultiplayChannelStore from "@/components/basics/Multiplay/useMultiplayChannelStore";
-import VoiceChatPanel from "@/components/basics/VoiceChatPanel/VoiceChatPanel";
+import ParticipantInfoGroup from "@/components/basics/ParticipantInfoGroup/ParticipantInfoGroup";
 import MultiplayUtil from "@/libs/util/MultiplayUtil";
 import { ReceivedDataMessage } from "@livekit/components-core";
 import {
@@ -131,7 +131,7 @@ const MultiplayChannel = (props: MultiplayChannelProps) => {
           onConnectedCallback={onJoinCallback}
           onDisconnectedCallback={onLeaveCallback}
         />
-        <VoiceChatPanel />
+        <ParticipantInfoGroup />
       </LiveKitRoom>
     </>
   );

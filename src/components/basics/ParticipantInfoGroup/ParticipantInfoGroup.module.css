@@ -1,0 +1,15 @@
+.muteButtonDiv {
+  position: fixed;
+  z-index: 1000;
+  bottom: 25vh;
+  right: 30vw;
+}
+
+.micOnIcon {
+  font-size: 20px;
+  color: springgreen;
+}
+.micOffIcon {
+  font-size: 20px;
+  color: red;
+}

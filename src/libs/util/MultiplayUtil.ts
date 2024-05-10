@@ -10,11 +10,11 @@ export default class MultiplayUtil {
   ): Promise<string | undefined> => {
     if (!roomName) return undefined;
     const url =
-      accessTokenUrl + "?roomName=" + roomName + "&participantName=" + userName;
+      accessTokenUrl + "?RoomName=" + roomName + "&ParticipantName=" + userName;
     console.debug("Get Access Token: %s", url);
     try {
       const res = await axios.get(url);
-      return res.data;
+      return res.data.AccessToken;
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         console.error(

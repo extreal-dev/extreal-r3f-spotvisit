@@ -1,6 +1,7 @@
 import useMultiplayChannelStore from "@/components/basics/Multiplay/useMultiplayChannelStore";
 import usePlayerInfoStore from "@/components/basics/Player/usePlayerStore";
 import AvatarSelectDialog from "@/components/pages/AvatarSelect/AvatarSelectDialog";
+import ParticipantInfoList from "@/components/pages/ParticipantList/ParticipantInfoList";
 import MultiplayUtil from "@/libs/util/MultiplayUtil";
 import { Button, Col, Input, Modal, Row, Typography } from "antd";
 import { ConnectionState } from "livekit-client";
@@ -10,6 +11,7 @@ import { IoMdHome } from "react-icons/io";
 import {
   MdConnectWithoutContact,
   MdKeyboardArrowLeft,
+  MdOutlineGroup,
   MdOutlineGroupAdd,
 } from "react-icons/md";
 import { TbPlugConnected, TbPlugConnectedX } from "react-icons/tb";
@@ -22,7 +24,14 @@ const IconMenu = () => {
   const channel = useMultiplayChannelStore();
   const [isAvatarSelectOpen, setIsAvatarSelectOpen] = useState(false);
   const [isMultiplayOpen, setIsMultiplayOpen] = useState(false);
+  const [isGroupListOpen, setIsGroupListOpen] = useState(false);
   const [groupName, setGroupName] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Remove whitespaces
+    const newValue = e.target.value.replace(/ /g, "");
+    setGroupName(newValue);
+  };
 
   const onOK = () => {
     setIsAvatarSelectOpen(false);
@@ -36,17 +45,12 @@ const IconMenu = () => {
     switch (channel.connectStatus) {
       case ConnectionState.Connected:
         return <MdConnectWithoutContact className={styles.connectedIcon} />;
-        break;
       case ConnectionState.Disconnected:
         return <MdOutlineGroupAdd />;
-        break;
       case ConnectionState.Connecting:
         return <TbPlugConnected />;
-        break;
       case ConnectionState.Reconnecting:
         return <TbPlugConnectedX />;
-        break;
-
       default:
         break;
     }
@@ -79,14 +83,50 @@ const IconMenu = () => {
             <p>Select Spot</p>
           )}
         </Col>
-        <Col span={8} className={styles.avatarSelectCol}>
+        <Col span={8} className={styles.iconButtonsCol}>
+          {channel.isConnected && (
+            <>
+              <Button
+                onClick={() => {
+                  setIsGroupListOpen(true);
+                }}
+                type="link"
+                className={styles.iconButton}
+                icon={<MdOutlineGroup />}
+                // Prevent to open modal by space key
+                onKeyDown={(e) => e.preventDefault()}
+              />
+              <Modal
+                open={isGroupListOpen}
+                onCancel={() => {
+                  setIsGroupListOpen(false);
+                }}
+                footer={[
+                  <Button
+                    key="close"
+                    type="primary"
+                    onClick={() => {
+                      setIsGroupListOpen(false);
+                    }}
+                  >
+                    Close
+                  </Button>,
+                ]}
+                destroyOnClose
+              >
+                <ParticipantInfoList />
+              </Modal>
+            </>
+          )}
           <Button
             onClick={() => {
               setIsMultiplayOpen(true);
             }}
             type="link"
-            className={styles.avatarSelectButton}
+            className={styles.iconButton}
             icon={ConnectStatusIcon()}
+            // Prevent to open modal by space key
+            onKeyDown={(e) => e.preventDefault()}
           />
           <Modal
             open={isMultiplayOpen}
@@ -128,7 +168,9 @@ const IconMenu = () => {
                     : "Join or Create Multiplay Group"}
                 </Typography.Title>
                 <Input
-                  onChange={(e) => setGroupName(e.target.value)}
+                  // Prevent zoom when touch on mobile browser
+                  size="large"
+                  onChange={handleChange}
                   placeholder="Enter Group Name"
                   value={groupName}
                   disabled={channel.isConnected}
@@ -141,8 +183,10 @@ const IconMenu = () => {
               setIsAvatarSelectOpen(true);
             }}
             type="link"
-            className={styles.avatarSelectButton}
+            className={styles.iconButton}
             icon={<HiDotsVertical />}
+            // Prevent to open modal by space key
+            onKeyDown={(e) => e.preventDefault()}
           />
           <AvatarSelectDialog open={isAvatarSelectOpen} onClose={onOK} />
         </Col>

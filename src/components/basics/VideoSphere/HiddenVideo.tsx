@@ -11,7 +11,7 @@ export type HiddenVideoProps = {
 export const HiddenVideo = (props: HiddenVideoProps) => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [userInteracted, setUserInteracted] = React.useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   const hls = useRef<Hls | null>(null);
 
@@ -156,7 +156,14 @@ export const HiddenVideo = (props: HiddenVideoProps) => {
         muted
         preload="auto"
         loop
-        style={{ opacity: 0, position: "absolute", zIndex: -1 }}
+        // Hide video and remove div space
+        style={{
+          opacity: 0,
+          width: 0,
+          height: 0,
+          position: "absolute",
+          zIndex: -1,
+        }}
       />
       <div>
         {!userInteracted ? (

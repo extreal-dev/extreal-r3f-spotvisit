@@ -9,6 +9,7 @@ import { HiddenVideo } from "@/components/basics/VideoSphere/HiddenVideo";
 import VideoSphere from "@/components/basics/VideoSphere/VideoSphere";
 import { VirtualJoyStick } from "@/components/basics/VirtualJoyStick/VirtualJoyStick";
 import useVirtualJoyStickPlayerInput from "@/hooks/useVirtualJoyStickPlayerInput";
+import { Grid } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { useRef } from "react";
 import styles from "./InSpot.module.css";
@@ -34,11 +35,23 @@ const InSpot = () => {
                   imageSourceUrl={playerInfo.spotInfo.sphericalImageUrl}
                 />
               )}
-              <ambientLight intensity={7} />
+              <ambientLight intensity={5} />
               <ThirdPersonCamera
                 movement={playerInput.movement}
                 setMovement={playerInput.setMovement}
                 avatarRef={avatarRef}
+              />
+              {/* Floor showing the range within VideoSphere */}
+              <Grid
+                cellSize={1}
+                cellThickness={0.3}
+                cellColor={"gray"}
+                sectionSize={0}
+                sectionThickness={0}
+                sectionColor={"gray"}
+                args={[30, 30]}
+                fadeDistance={120}
+                fadeStrength={1}
               />
               {avatarSelectStore.avatarType && (
                 <>
@@ -51,12 +64,14 @@ const InSpot = () => {
               )}
             </Canvas>
           </div>
-          <div style={{ display: "none" }}>
-            <HiddenVideo
-              videoSourceUrl={playerInfo.spotInfo.sphericalVideoUrl}
-              videoId="video"
-            />
-          </div>
+          {playerInfo.spotInfo.sphericalVideoUrl && (
+            <div>
+              <HiddenVideo
+                videoSourceUrl={playerInfo.spotInfo.sphericalVideoUrl}
+                videoId="video"
+              />
+            </div>
+          )}
         </>
       )}
     </>
