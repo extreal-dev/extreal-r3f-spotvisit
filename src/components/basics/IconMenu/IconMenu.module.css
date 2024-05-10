@@ -24,16 +24,16 @@
   font-size: x-large;
 }
 
-.avatarSelectCol {
+.iconButtonsCol {
   text-align: end;
 }
 
-.avatarSelectButton {
+.iconButton {
   background-color: transparent;
   border: 0px;
   color: white;
   font-size: x-large;
-  margin-right: 20px;
+  margin-right: 5px;
 }
 
 .connectedIcon {
