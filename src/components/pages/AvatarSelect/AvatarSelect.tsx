@@ -24,14 +24,22 @@ export const AvatarSelect = (props: AvatarSelectProps) => {
     props.handleOK();
   };
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Remove whitespaces not to be bugged when parsing JSON message in multiplay.
+    const newValue = e.target.value.replace(/ /g, "");
+    setPlayerName(newValue);
+  };
+
   return (
     <>
       <Row>
         <Col span={24}>
           <Typography.Title level={5}>Nickname</Typography.Title>
           <Input
+            // Prevent zoom when touch on mobile browser
+            size="large"
             value={playerName}
-            onChange={(e) => setPlayerName(e.target.value)}
+            onChange={handleChange}
             placeholder="Enter nickname"
           />
         </Col>
@@ -40,6 +48,8 @@ export const AvatarSelect = (props: AvatarSelectProps) => {
         <Col span={24}>
           <Typography.Title level={5}>Avatar</Typography.Title>
           <Select
+            // Prevent zoom when touch on mobile browser
+            size="large"
             placeholder="Select avatar"
             value={avatarType || undefined}
             onChange={(value) => setAvatarType(value)}
