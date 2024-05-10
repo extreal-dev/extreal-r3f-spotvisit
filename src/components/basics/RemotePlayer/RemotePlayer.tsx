@@ -39,6 +39,7 @@ const RemotePlayer = (props: RemotePlayerProps) => {
         animationMap={defaultAnimationMap}
         controller={remotePlayerInfo.controller}
         currentMotion={remotePlayerInfo.motion}
+        playerId={remotePlayerInfo.playerId}
         remotePosition={remotePlayerInfo.position}
         remoteRotation={remotePlayerInfo.rotation}
         remoteCameraDirection={remotePlayerInfo.cameraDirection}

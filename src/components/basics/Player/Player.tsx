@@ -73,9 +73,6 @@ const Player = (props: PlayerProps) => {
     movement.right,
     movement.running,
     movement.jump,
-    movement.cameraPosition.x,
-    movement.cameraPosition.y,
-    movement.cameraPosition.z,
     channel.isConnected,
     enqueueUpdate,
   ]);
@@ -98,6 +95,7 @@ const Player = (props: PlayerProps) => {
         avatarPath={getAvatarPath(avatarSelectStore.avatarType)}
         animationMap={defaultAnimationMap}
         controller={movement}
+        playerId={playerInfo.multiplayPlayerId}
       />
     </>
   );

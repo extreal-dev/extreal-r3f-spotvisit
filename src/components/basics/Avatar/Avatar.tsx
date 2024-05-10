@@ -1,9 +1,10 @@
+import ParticipantInfoPanel from "@/components/basics/ParticipantInfoPanel/ParticipantInfoPanel";
 import { CharacterController } from "@/hooks/usePlayerInput";
 import useUpdateMotion from "@/hooks/useUpdateMotion";
 import useUpdateTransform from "@/hooks/useUpdateTransform";
 import useLoadVRM from "@/hooks/useVRM";
 import useVRMAnimation from "@/hooks/useVRMAnimation";
-import { Html } from "@react-three/drei";
+import { Billboard, Html } from "@react-three/drei";
 import { useFrame, useThree } from "@react-three/fiber";
 import {
   Dispatch,
@@ -29,6 +30,7 @@ export interface AvatarProps {
   currentMotion?: string;
   controller?: CharacterController;
   onLoad?: () => void;
+  playerId?: string;
   remotePosition?: THREE.Vector3;
   remoteRotation?: THREE.Euler;
   remoteCameraDirection?: THREE.Vector3;
@@ -53,35 +55,46 @@ export type AvatarHandle = {
  * @/returns Rendered Avatar component.
  */
 export const Avatar = forwardRef((props: AvatarProps, ref) => {
-  const { gltf, progress, error } = useLoadVRM({
-    avatarPath: props.avatarPath,
-  });
+  const {
+    avatarPath,
+    animationMap,
+    currentMotion,
+    controller,
+    onLoad,
+    playerId,
+    remotePosition,
+    remoteRotation,
+    remoteCameraDirection,
+    remoteCameraUp,
+  } = props;
+
+  const { gltf, progress, error } = useLoadVRM({ avatarPath });
   const avatarRef = useRef<THREE.Group | null>(null);
+  const panelRef = useRef<THREE.Mesh>(null);
   const setAnimation = useVRMAnimation({
     gltf,
     avatarRef,
-    animationMap: props.animationMap,
+    animationMap,
   });
   useEffect(() => {
     if (!gltf) return;
-    if (props.animationMap && setAnimation && props.currentMotion) {
-      setAnimation(props.currentMotion);
+    if (animationMap && setAnimation && currentMotion) {
+      setAnimation(currentMotion);
     }
-  }, [gltf, setAnimation, props.animationMap, props.currentMotion]);
+  }, [gltf, setAnimation, animationMap, currentMotion]);
 
   useImperativeHandle(ref, () => ({
     getGltf: () => gltf,
     getAvatar: () => gltf?.scene,
     getPosition: () => gltf?.scene.position,
     getRotation: () => gltf?.scene.rotation,
-    getCurrentMotion: () => props.currentMotion,
-    getController: () => props.controller,
+    getCurrentMotion: () => currentMotion,
+    getController: () => controller,
     setMotion: setAnimation,
     setPosition: setPosition,
   }));
 
   const isLoaded = useRef(false);
-  const onLoad = props.onLoad;
   useEffect(() => {
     if (!gltf) return;
     if (!isLoaded.current) {
@@ -89,15 +102,14 @@ export const Avatar = forwardRef((props: AvatarProps, ref) => {
         onLoad();
       }
       if (gltf.scene) {
-        if (props.remotePosition) {
-          gltf.scene.position.copy(props.remotePosition);
+        if (remotePosition) {
+          gltf.scene.position.copy(remotePosition);
         }
-        if (props.remoteRotation)
-          gltf.scene.rotation.copy(props.remoteRotation);
+        if (remoteRotation) gltf.scene.rotation.copy(remoteRotation);
       }
       isLoaded.current = true;
     }
-  }, [gltf, onLoad, props.remotePosition, props.remoteRotation]);
+  }, [gltf, onLoad, remotePosition, remoteRotation]);
 
   const setPosition = (pos: THREE.Vector3) => {
     gltf?.scene.position.copy(pos);
@@ -114,28 +126,28 @@ export const Avatar = forwardRef((props: AvatarProps, ref) => {
 
   useUpdateTransform(
     gltf,
-    props.controller,
-    props.remoteCameraDirection ??
-      camera.getWorldDirection(new THREE.Vector3()),
-    props.remoteCameraUp ?? camera.up,
+    controller,
+    remoteCameraDirection ?? camera.getWorldDirection(new THREE.Vector3()),
+    remoteCameraUp ?? camera.up,
     prevPosition,
   );
-  useUpdateMotion(gltf, setAnimation, props.controller);
+  useUpdateMotion(gltf, setAnimation, controller);
 
+  const panelOffset = new THREE.Vector3(0, 2, 0);
   useFrame(() => {
     if (!gltf) {
       return;
     }
     const lerpFactor = 0.1;
-    if (props.remotePosition && props.remotePosition !== prevRemotePosition) {
+    if (remotePosition && remotePosition !== prevRemotePosition) {
       const vrm = gltf.scene;
-      vrm.position.lerp(props.remotePosition, lerpFactor);
-      setPrevRemotePosition(props.remotePosition);
+      vrm.position.lerp(remotePosition, lerpFactor);
+      setPrevRemotePosition(remotePosition);
     }
-    if (props.remoteRotation && props.remoteRotation !== prevRemoteRotation) {
+    if (remoteRotation && remoteRotation !== prevRemoteRotation) {
       const vrm = gltf.scene;
-      vrm.rotation.copy(props.remoteRotation);
-      setPrevRemoteRotation(props.remoteRotation);
+      vrm.rotation.copy(remoteRotation);
+      setPrevRemoteRotation(remoteRotation);
     }
 
     // Save the character's position before updating
@@ -148,6 +160,11 @@ export const Avatar = forwardRef((props: AvatarProps, ref) => {
         setPrevPosition(currentPosition);
       }
     }
+
+    // Make ParticipantInfoPanel follow the avatar smoothly
+    if (panelRef.current) {
+      panelRef.current.position.copy(currentPosition).add(panelOffset);
+    }
   });
 
   return (
@@ -158,12 +175,25 @@ export const Avatar = forwardRef((props: AvatarProps, ref) => {
             <span style={{ color: "red" }}>Error: {error.message}</span>
           </Html>
         ) : gltf ? (
-          <group ref={avatarRef}>
-            <primitive object={gltf.scene} />
-          </group>
+          <>
+            <group ref={avatarRef}>
+              <primitive object={gltf.scene} />
+            </group>
+            <mesh ref={panelRef} scale={0.4}>
+              <Billboard>
+                <Html
+                  transform
+                  // Limit the range to prevent using the maximum z-index as default
+                  zIndexRange={[100, 0]}
+                >
+                  <ParticipantInfoPanel playerId={playerId ?? ""} />
+                </Html>
+              </Billboard>
+            </mesh>
+          </>
         ) : (
           <Html center>
-            <span style={{ color: "white" }}>Loading: {progress}</span>
+            <span style={{ color: "black" }}>Loading: {progress}%</span>
           </Html>
         )}
       </Suspense>
