@@ -1,6 +1,7 @@
 import IconMenu from "@/components/basics/IconMenu/IconMenu";
 import MultiplayChannel from "@/components/basics/Multiplay/MultiplayChannel";
 import usePlayerInfoStore from "@/components/basics/Player/usePlayerStore";
+import VConsoleComp from "@/components/basics/VConsole/VConsole";
 import ErrorPage from "@/components/pages/ErrorPage/ErrorPage";
 import InSpot from "@/components/pages/InSpot/InSpot";
 import SpotSelectPanel from "@/components/pages/SpotSelect/SpotSelectPanel";
@@ -37,6 +38,7 @@ function App() {
   return (
     <>
       <ErrorBoundary FallbackComponent={ErrorPage}>
+        <VConsoleComp />
         <QueryClientProvider client={queryClient}>
           <IconMenu />
           <MultiplayChannel
