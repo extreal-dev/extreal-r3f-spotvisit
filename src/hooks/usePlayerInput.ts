@@ -47,7 +47,7 @@ const usePlayerInput = () => {
       if (["d", "D", "ArrowRight"].includes(event.key)) {
         nextMovement.right = true;
       }
-      if (["Shift"].includes(event.key)) {
+      if (["Shift", "W", "S", "A", "D"].includes(event.key)) {
         nextMovement.running =
           nextMovement.forward ||
           nextMovement.backward ||
