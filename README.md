@@ -18,6 +18,7 @@ To start Access Token Server, execute the following command.
 
 ```text
 cd livekit-server
+npm i
 npm run start
 ```
 
@@ -35,6 +36,7 @@ npm run api-mock
 ### Start Spot Visit
 
 ```text
+npm i
 npm run dev
 ```
 
