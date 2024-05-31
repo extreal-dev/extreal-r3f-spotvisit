@@ -1,0 +1,117 @@
+{
+  "uuid": "456a306b-9d1e-417b-a9ba-d73412d321ca",
+  "lastMigration": 32,
+  "name": "openapi",
+  "endpointPrefix": "",
+  "latency": 0,
+  "port": 5100,
+  "hostname": "",
+  "folders": [],
+  "routes": [
+    {
+      "uuid": "eb428698-d3fa-41b9-bb5b-1d88f7142196",
+      "type": "http",
+      "documentation": "スポット一覧の取得",
+      "method": "get",
+      "endpoint": "spots",
+      "responses": [
+        {
+          "uuid": "2a1ba7c1-ac0a-4f15-b5ca-82df0ba70d18",
+          "body": "[\n  {\n    \"id\": \"ayutthaya1\",\n    \"name\": \"Ayutthaya\",\n    \"description\": \"The Ayutthaya Kingdom or the Empire of Ayutthaya was a Siamese kingdom that existed in Southeast Asia from 1351 to 1767, centered around the city of Ayutthaya, in Siam, or present-day Thailand.\",\n    \"thumbnailImageUrl\": \"./images/ayutthaya1-2d.png\",\n    \"sphericalImageUrl\": \"./images/ayutthaya1-3d.png\",\n    \"sphericalVideoUrl\": \"./videos/ayutthaya/ayutthaya1.m3u8\"\n  },\n  {\n    \"id\": \"ayutthaya2\",\n    \"name\": \"Ayutthaya Part II\",\n    \"description\": \"Ayutthaya is a historical city in Thailand, known for its majestic ruins, which include ancient temples, palaces, and statues. Once a prosperous Siamese capital, it is now a UNESCO World Heritage Site, attracting visitors with its rich history and architectural beauty.\",\n    \"thumbnailImageUrl\": \"./images/ayutthaya2-2d.png\",\n    \"sphericalImageUrl\": \"./images/ayutthaya2-3d.png\",\n    \"sphericalVideoUrl\": \"./videos/ayutthaya/ayutthaya1.m3u8\"\n  },\n  {\n    \"id\": \"ayutthaya3\",\n    \"name\": \"Ayutthaya Part III\",\n    \"description\": \"The Ayutthaya Historical Park houses the remnants of the old city of Ayutthaya, showcasing a blend of Siamese, Khmer, Sri Lankan, and Persian influences. Its ruins, characterized by prang (reliquary towers) and gigantic monasteries, offer a glimpse into Thailand's glorious past.\",\n    \"thumbnailImageUrl\": \"./images/ayutthaya3-2d.png\",\n    \"sphericalImageUrl\": \"./images/ayutthaya3-3d.png\",\n    \"sphericalVideoUrl\": \"\"\n  },\n  {\n    \"id\": \"toyosu1\",\n    \"name\": \"Toyosu Part I\",\n    \"description\": \"Toyosu is a district in Tokyo, Japan, known for its modern waterfront development. It's home to the Toyosu Market, the world's largest wholesale fish market, which replaced the historic Tsukiji Market. The area also features residential towers, commercial spaces, and parks, making it a vibrant part of Tokyo's bay area\",\n    \"thumbnailImageUrl\": \"./images/toyosu1-2d.png\",\n    \"sphericalImageUrl\": \"./images/toyosu1-3d.png\",\n    \"sphericalVideoUrl\": \"./videos/toyosu1/toyosu1.m3u8\"\n  },\n  {\n    \"id\": \"toyosu2\",\n    \"name\": \"Toyosu Part II\",\n    \"description\": \"Toyosu is a district in the Koto Ward of Tokyo, Japan, known for its modern waterfront developments, including luxury high-rise apartments, commercial facilities, and parks. It is also famous for the Toyosu Market, one of the largest wholesale seafood and produce markets in the world, which replaced the historic Tsukiji Market in October 2018.\",\n    \"thumbnailImageUrl\": \"./images/toyosu2-2d.png\",\n    \"sphericalImageUrl\": \"./images/toyosu2-3d.png\",\n    \"sphericalVideoUrl\": \"./videos/toyosu2/toyosu2.m3u8\"\n  },\n  {\n    \"id\": \"toyosu3\",\n    \"name\": \"Toyosu Part III\",\n    \"description\": \"Toyosu, located in Tokyo, Japan, gained fame with the 2018 relocation of Tsukiji fish market to Toyosu Market. Known for its modern architecture, it combines a bustling market, residential areas, and waterfront parks, showcasing Tokyo's blend of innovation and tradition.\",\n    \"thumbnailImageUrl\": \"./images/toyosu2-2d.png\",\n    \"sphericalImageUrl\": \"./images/toyosu2-3d.png\",\n    \"sphericalVideoUrl\": \"\"\n  }\n]",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "OK",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": true,
+          "crudKey": "id",
+          "callbacks": []
+        },
+        {
+          "uuid": "e9c4f69a-8e04-4c2a-8096-d7f1200b1ff4",
+          "body": "[\n  {\n    \"id\": \"toba\",\n    \"name\": \"鳥羽\",\n    \"description\": \"鳥羽（とば）とは、かつて京都洛外、山城国紀伊郡に属していた鳥羽郷（とばごう）・鳥羽荘（とばのしょう）などと呼ばれた地域を指す名称。現在では京都市でも南区に属する上鳥羽・伏見区に属する下鳥羽に分割されている\",\n    \"thumbnailImageUrl\": \"string\",\n    \"sphericalImageUrl\": \"string\",\n    \"sphericalVideoUrl\": \"string\"\n  },\n  {\n    \"id\": \"fushimi\",\n    \"name\": \"伏見\",\n    \"description\": \"伏見区（ふしみく）は、京都市を構成する11の行政区の1つで、京都市の南部に位置する\",\n    \"thumbnailImageUrl\": \"string\",\n    \"sphericalImageUrl\": \"string\",\n    \"sphericalVideoUrl\": \"string\"\n  },\n  {\n    \"id\": \"mibu\",\n    \"name\": \"壬生\",\n    \"description\": \"壬生（みぶ）は京都市中京区の地名。地名はかつて、湿地帯であったことに由来する。平安京造営の際に開発されたが衰退し、元の湿地帯に戻った。朱雀院跡がNISSHA本社の敷地から発掘されている\",\n    \"thumbnailImageUrl\": \"string\",\n    \"sphericalImageUrl\": \"string\",\n    \"sphericalVideoUrl\": \"string\"\n  }\n]",
+          "latency": 0,
+          "statusCode": 200,
+          "label": "example-1",
+          "headers": [
+            {
+              "key": "Content-Type",
+              "value": "application/json"
+            }
+          ],
+          "bodyType": "INLINE",
+          "filePath": "",
+          "databucketID": "",
+          "sendFileAsBody": false,
+          "rules": [],
+          "rulesOperator": "OR",
+          "disableTemplating": false,
+          "fallbackTo404": false,
+          "default": false,
+          "crudKey": "id",
+          "callbacks": []
+        }
+      ],
+      "responseMode": null
+    }
+  ],
+  "rootChildren": [
+    {
+      "type": "route",
+      "uuid": "eb428698-d3fa-41b9-bb5b-1d88f7142196"
+    }
+  ],
+  "proxyMode": false,
+  "proxyHost": "",
+  "proxyRemovePrefix": false,
+  "tlsOptions": {
+    "enabled": false,
+    "type": "CERT",
+    "pfxPath": "",
+    "certPath": "",
+    "keyPath": "",
+    "caPath": "",
+    "passphrase": ""
+  },
+  "cors": true,
+  "headers": [
+    {
+      "key": "Access-Control-Allow-Origin",
+      "value": "*"
+    },
+    {
+      "key": "Access-Control-Allow-Methods",
+      "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+    },
+    {
+      "key": "Access-Control-Allow-Headers",
+      "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+    }
+  ],
+  "proxyReqHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "proxyResHeaders": [
+    {
+      "key": "",
+      "value": ""
+    }
+  ],
+  "data": [],
+  "callbacks": []
+}
